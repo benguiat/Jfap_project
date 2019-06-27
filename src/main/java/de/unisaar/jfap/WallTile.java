@@ -10,5 +10,9 @@ package de.unisaar.jfap;
  * @author Dunfield
  */
 public class WallTile {
+    protected boolean destructable;
     
+    public WallTile (boolean destructable) {
+        this.destructable = destructable;
+    }
 }
