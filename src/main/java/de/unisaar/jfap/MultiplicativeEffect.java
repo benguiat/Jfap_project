@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package de.unisaar.jfap;
+public class MultiplicativeEffect extends Effect {
 
-/**
- *
- * @author Dunfield
- */
-public class MultiplicativeEffect {
-    
+	protected double health = 1;
+	protected double magic = 1;
+	protected int howLong = 1;
+
 }
