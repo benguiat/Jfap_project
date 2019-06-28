@@ -11,4 +11,8 @@ package de.unisaar.jfap;
  */
 public class ObstacleTile {
     
+    public ObstacleTile () {
+  
+    }
+    
 }
