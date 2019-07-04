@@ -16,7 +16,7 @@ public class World {
     private final ArrayList<Room> mapElements;
     
     public World(){
-        
+     
         this.mapElements = new ArrayList<Room>();
     }
     

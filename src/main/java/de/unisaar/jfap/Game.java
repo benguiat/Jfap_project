@@ -11,13 +11,12 @@ import java.util.ArrayList;
  *
  * @author Dunfield
  */
-public class Game {
+public class Game{
     
     private final World world;
     
     public Game(World world){
-        
-         this.world = new World();
+        this.world = new World();
          
     }
     

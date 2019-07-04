@@ -11,4 +11,6 @@ package de.unisaar.jfap;
  */
 public class Effect {
     
+ 
+    
 }
