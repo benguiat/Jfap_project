@@ -1,3 +1,5 @@
+package de.unisaar.jfap;
+
 public class Connector {
 
 	protected Room fromRoom;

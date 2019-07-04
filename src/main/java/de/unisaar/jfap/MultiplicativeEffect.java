@@ -1,3 +1,6 @@
+
+package de.unisaar.jfap;
+
 public class MultiplicativeEffect extends Effect {
 
 	protected double health = 1;
