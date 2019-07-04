@@ -10,5 +10,9 @@ package de.unisaar.jfap;
  * @author Dunfield
  */
 public class Trap {
+    StairTile trapDoor = null;
+    Effect effect;
+
+
     
 }
