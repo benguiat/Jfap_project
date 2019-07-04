@@ -10,5 +10,8 @@ package de.unisaar.jfap;
  * @author Dunfield
  */
 public class Wearable {
+    int weight;
+    Effect effect;
+    boolean isWeapon;
     
 }
