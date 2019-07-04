@@ -10,5 +10,10 @@ package de.unisaar.jfap;
  * @author Dunfield
  */
 public class Effect {
-    
+    public apply(Effect effect){
+        return effect;
+    }
+
+    public void effect(Character character){
+    }
 }
