@@ -8,16 +8,15 @@ package de.unisaar.jfap;
 import java.util.ArrayList;
 
 /**
- *
  * @author Dunfield
  */
 public class World {
-    
-    private final ArrayList<Room> mapElements;
-    
-    public World(){
-     
-        this.mapElements = new ArrayList<Room>();
-    }
-    
+
+  private final ArrayList<Room> mapElements;
+
+  public World() {
+
+    this.mapElements = new ArrayList<Room>();
+  }
+
 }

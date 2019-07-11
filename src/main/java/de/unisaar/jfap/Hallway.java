@@ -6,11 +6,10 @@
 package de.unisaar.jfap;
 
 /**
- *
  * @author Dunfield
  */
 public class Hallway {
-    DoorTile fromTile;
-    DoorTile toTile;
-    
+  DoorTile fromTile;
+  DoorTile toTile;
+
 }
