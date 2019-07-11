@@ -5,14 +5,16 @@
  */
 package de.unisaar.jfap;
 
-
-public class Effect {
-
-    public Effect apply(Effect effect){
-        return effect;
+/**
+ *
+ * @author Dunfield
+ */
+public class StairTile {
+    
+    Stair stair;
+    
+    public StairTile(Stair stair){
+        this.stair = stair;
     }
-
-    public void effect(Character character){
-    }
+    
 }
-
