@@ -29,6 +29,9 @@ public class Character {
   }
 
   public void move(Tile destination) {
+      
+      
+      this.tile = destination;
 
   }
 
