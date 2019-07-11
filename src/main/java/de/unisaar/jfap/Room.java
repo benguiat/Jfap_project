@@ -6,15 +6,14 @@
 package de.unisaar.jfap;
 
 /**
- *
  * @author Dunfield
  */
 public class Room {
-    
-    private final int[][] tiles;
-    
-    public Room(int[][] tiles){
-        this.tiles = tiles;
-    }
-    
+
+  private final int[][] tiles;
+
+  public Room(int[][] tiles) {
+    this.tiles = tiles;
+  }
+
 }

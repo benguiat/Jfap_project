@@ -6,13 +6,12 @@
 package de.unisaar.jfap;
 
 /**
- *
  * @author Dunfield
  */
 public class ObstacleTile {
-    
-    public ObstacleTile () {
-  
-    }
-    
+
+  public ObstacleTile() {
+
+  }
+
 }

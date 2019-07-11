@@ -6,15 +6,13 @@
 package de.unisaar.jfap;
 
 /**
- *
  * @author Dunfield
  */
 public class Fixtures {
-    
-    public Fixtures () {
-        
-        
-        
-    }
-    
+
+  public Fixtures() {
+
+
+  }
+
 }

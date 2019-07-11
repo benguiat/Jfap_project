@@ -6,20 +6,19 @@
 package de.unisaar.jfap;
 
 /**
- *
  * @author Dunfield
  */
 public class DoorTile extends WallTile {
-    
-    private final boolean locked;
-    private final Hallway hallway;
-    private final Items matchingKey;
-    
-    public DoorTile(boolean locked, Hallway hallway, Items matchingKey, boolean destructable){
-        super(destructable);
-        this.locked = locked;
-        this.hallway = new Hallway();
-        this.matchingKey = matchingKey;
-    }
-    
+
+  private final boolean locked;
+  private final Hallway hallway;
+  private final Items matchingKey;
+
+  public DoorTile(boolean locked, Hallway hallway, Items matchingKey, boolean destructable) {
+    super(destructable);
+    this.locked = locked;
+    this.hallway = new Hallway();
+    this.matchingKey = matchingKey;
+  }
+
 }

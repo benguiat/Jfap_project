@@ -6,11 +6,10 @@
 package de.unisaar.jfap;
 
 /**
- *
  * @author Dunfield
  */
 public class Stair {
-    StairTile fromtile;
-    StairTile toTile;
-    
+  StairTile fromtile;
+  StairTile toTile;
+
 }
