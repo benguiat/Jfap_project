@@ -110,11 +110,13 @@ public class Character implements Storable, TraitedTileOccupier {
     Tile CharLoc = this.tile;
     Tile ItemLoc = what.getTile();
     
-    Double sum = 0d;
+    Double sum = 0.0;
     for (Wearable item : items) {
-      Double.sum(sum, item.weight);
+      sum = Double.sum(sum, item.weight);
     }
     if (this.maxWeight > sum && CharLoc == ItemLoc) {
+      ItemLoc.onTile().remove(what);
+      this.items.add(what);
       return true;
     }
     else {
