@@ -1,10 +1,13 @@
 package de.unisaar.faphack.model.map;
 
+import de.unisaar.faphack.model.MarshallingContext;
+import de.unisaar.faphack.model.Storable;
+
 /**
  * @author
  *
  */
-public abstract class Connector<T extends Tile> {
+public abstract class Connector<T extends Tile> implements Storable {
   protected T fromTile;
   protected T toTile;
 
@@ -14,5 +17,13 @@ public abstract class Connector<T extends Tile> {
 
   public T to() {
     return toTile;
+  }
+
+  public void marshal(MarshallingContext c) {
+    // TODO: FILL THIS
+  }
+
+  public void unmarshal(MarshallingContext c) {
+    // TODO: FILL THIS
   }
 }

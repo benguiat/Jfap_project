@@ -1,5 +1,7 @@
 package de.unisaar.faphack.model.map;
 
+import de.unisaar.faphack.model.MarshallingContext;
+
 /**
  * (NULL)
  *
@@ -18,5 +20,15 @@ public class Stair extends Connector<StairTile> {
 
   public boolean onlyDown() {
     return oneWay;
+  }
+
+  @Override
+  public void marshal(MarshallingContext c) {
+    // TODO: FILL THIS
+  }
+
+  @Override
+  public void unmarshal(MarshallingContext c) {
+    // TODO: FILL THIS
   }
 }

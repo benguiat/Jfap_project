@@ -10,7 +10,7 @@ import de.unisaar.faphack.model.map.World;
  * @author
  *
  */
-public class Game {
+public class Game implements Storable {
   private World world;
 
   public Game() {
@@ -19,10 +19,11 @@ public class Game {
 
   /**
    * @param whom
-   * @param destination
+   * @param direction
    * @return boolean
    */
   public boolean move(Character whom, Direction direction) {
+    // TODO: fill this
     return false;
   }
 
@@ -33,6 +34,7 @@ public class Game {
    * @return List<Item>
    */
   public List<Item> listItems(Character who, Direction direction) {
+    // TODO: fill this
     return null;
   }
 
@@ -42,7 +44,18 @@ public class Game {
    * @return boolean
    */
   public boolean pickUp(Character who, Item item) {
+    // TODO: fill this
     return false;
+  }
+
+  @Override
+  public void marshal(MarshallingContext c) {
+    // TODO: fill this
+  }
+
+  @Override
+  public void unmarshal(MarshallingContext c) {
+    // TODO: fill this
   }
 
 }

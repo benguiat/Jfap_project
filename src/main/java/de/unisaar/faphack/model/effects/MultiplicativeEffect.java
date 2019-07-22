@@ -8,36 +8,14 @@ import de.unisaar.faphack.model.CharacterModifier;
  * @author
  *
  */
-public class MultiplicativeEffect implements ModifyingEffect {
-  /**
-   * The amount by which the health of the affected character is increased/dec
-   * reased.
-   */
-  protected double health = 1;
+public class MultiplicativeEffect extends ModifyingEffect {
 
-  /**
-   * The amount by which the magic of the affected character is increased/decr
-   * eased.
-   */
-  protected double magic = 1;
+  public MultiplicativeEffect(){}
 
-  /**
-   * The amount by which the magic of the affected character is increased/decr
-   * eased.
-   */
-  protected double power = 1;
-
-  /**
-   * This integer defines how long an effect applies. The value decreases when
-   * ever a character moves or performs an action.
-   */
-  protected int howLong = 1;
-
-  public MultiplicativeEffect(int h, int m, int p, int hl) {
+  public MultiplicativeEffect(double h, double m, double p, double hl) {
     health = h;
     magic = m;
     power = p;
-    howLong = hl;
   }
 
   /**
@@ -47,6 +25,7 @@ public class MultiplicativeEffect implements ModifyingEffect {
    * @return void
    */
   public CharacterModifier apply(CharacterModifier c) {
+    // TODO: FILL THIS
     return null;
   }
 

@@ -1,6 +1,7 @@
 package de.unisaar.faphack.model.map;
 
 import de.unisaar.faphack.model.Character;
+import de.unisaar.faphack.model.MarshallingContext;
 
 /**
  * Walltiles are used to determine the arrangement of a room. They usually
@@ -21,12 +22,27 @@ public class WallTile extends Tile {
   protected int destructible;
 
   public WallTile() {
+    trait = WALL;
+  }
 
+  public WallTile(int x, int y, Room room){
+    super(x, y, room);
+    trait = WALL;
   }
 
   @Override
   public Tile willTake(Character c) {
+    // TODO: FILL THIS
     return null;
   }
 
+  @Override
+  public void marshal(MarshallingContext c) {
+    // TODO: FILL THIS
+  }
+
+  @Override
+  public void unmarshal(MarshallingContext c) {
+    // TODO: FILL THIS
+  }
 }
