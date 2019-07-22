@@ -107,15 +107,18 @@ public class Character implements Storable, TraitedTileOccupier {
    */
   public boolean pickUp(Wearable what) {
     // TODO Auto-generated method stub: CHECK
+    Tile CharLoc = this.tile;
+    Tile ItemLoc = what.getTile();
+    
     Double sum = 0d;
     for (Wearable item : items) {
       Double.sum(sum, item.weight);
     }
-    if (this.maxWeight > sum) {
-      return false;
+    if (this.maxWeight > sum && CharLoc == ItemLoc) {
+      return true;
     }
     else {
-      return true;
+      return false;
 
     }
   }
