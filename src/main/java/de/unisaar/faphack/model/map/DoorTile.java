@@ -46,18 +46,22 @@ public class DoorTile extends WallTile implements Storable, Observable<DoorTile>
 
     }
     //if the door is open
-    if (this.open){
+    if (this.open) {
       return this;
-  //  }
-  //  else {
-     // return null;
+    }
+    return null;
+  }
+
+    //  }
+    //  else {
+    // return null;
 
     //}
 
 
     // TODO please implement me!
-   // return null;
-  }
+    // return null;
+
 
   @Override
   public void marshal(MarshallingContext c) {
