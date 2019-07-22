@@ -6,7 +6,8 @@ import de.unisaar.faphack.model.map.Tile;
  * @author
  *
  */
-public abstract class Item implements Storable, TraitedTileOccupier {
+public abstract class Item extends AbstractObservable<TraitedTileOccupier>
+implements Storable, TraitedTileOccupier {
   /**
    * The Tile on which the item is placed. This is null if the Item is in the
    * inventory of a character.
@@ -28,11 +29,11 @@ public abstract class Item implements Storable, TraitedTileOccupier {
   }
 
   public void marshal(MarshallingContext c) {
-    // TODO FILL THIS
+    // TODO please implement me!
   }
 
   public void unmarshal(MarshallingContext c) {
-    // TODO FILL THIS
+    // TODO please implement me!
   }
 
   @Override

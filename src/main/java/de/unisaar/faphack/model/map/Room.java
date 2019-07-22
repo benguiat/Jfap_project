@@ -1,11 +1,11 @@
 package de.unisaar.faphack.model.map;
 
-import java.util.List;
-
 import de.unisaar.faphack.model.Character;
 import de.unisaar.faphack.model.Direction;
 import de.unisaar.faphack.model.MarshallingContext;
 import de.unisaar.faphack.model.Storable;
+
+import java.util.List;
 
 /**
  * @author
@@ -29,7 +29,7 @@ public class Room implements Storable {
   Room(Tile[][] tiles) { this.tiles = tiles; }
 
   public Tile getNextTile(Tile t, Direction d) {
-    // TODO: FILL THIS
+    // TODO please implement me!
     return null;
   }
 
@@ -43,11 +43,11 @@ public class Room implements Storable {
 
   @Override
   public void marshal(MarshallingContext c) {
-    // TODO: FILL THIS
+    // TODO please implement me!
   }
 
   @Override
   public void unmarshal(MarshallingContext c) {
-    // TODO: FILL THIS
+    // TODO please implement me!
   }
 }

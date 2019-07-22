@@ -1,8 +1,8 @@
 package de.unisaar.faphack.model;
 
-import java.util.Collection;
-
 import de.unisaar.faphack.model.map.Tile;
+
+import java.util.Collection;
 
 public interface MarshallingContext {
 

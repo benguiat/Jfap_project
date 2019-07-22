@@ -19,7 +19,7 @@ public class Wearable extends Item {
   protected boolean isWeapon;
 
   /**
-   * The character who carries this item. This is null if the Item is placed o n a
+   * The character who carries this item. This is null if the Item is placed on a
    * Tile.
    */
   protected Character character;
@@ -30,12 +30,12 @@ public class Wearable extends Item {
 
   @Override
   public void marshal(MarshallingContext c) {
-    // TODO: FILL THIS
+    // TODO please implement me!
   }
 
   @Override
   public void unmarshal(MarshallingContext c) {
-    // TODO: FILL THIS
+    // TODO please implement me!
   }
 
 }

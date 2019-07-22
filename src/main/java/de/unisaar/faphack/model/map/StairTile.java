@@ -31,25 +31,24 @@ public class StairTile extends Tile {
    */
   @Override
   public Tile willTake(Character c) {
-    // TODO: FILL THIS
-    return null;
+    // TODO please implement me!
+   return null;
   }
 
   /** Return non-null if this is a trap */
   @Override
   public Trap hasTrap() {
-    // TODO: FILL THIS
-    return null;
+    return trap;
   }
 
   @Override
   public void marshal(MarshallingContext c) {
-    // TODO: FILL THIS
+    // TODO please implement me!
   }
 
   @Override
   public void unmarshal(MarshallingContext c) {
-    // TODO: FILL THIS
+    // TODO please implement me!
   }
 
   public Stair getStair(){

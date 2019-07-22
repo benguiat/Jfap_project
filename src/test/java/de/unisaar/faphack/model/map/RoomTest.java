@@ -4,13 +4,13 @@ import de.unisaar.faphack.model.Direction;
 import de.unisaar.faphack.model.TestUtils;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RoomTest {
 
   @Test
   void getNextTile() {
-    Room room = TestUtils.createSimpleRoom(4,4,null);
+    Room room = TestUtils.createSimpleRoom(4,4, 1);
     Tile[][] tiles = room.getTiles();
     // down
     assertEquals(tiles[1][1], room.getNextTile(tiles[2][1],new Direction(-1,0)));

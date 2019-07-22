@@ -24,11 +24,11 @@ public class Stair extends Connector<StairTile> {
 
   @Override
   public void marshal(MarshallingContext c) {
-    // TODO: FILL THIS
+    // TODO please implement me!
   }
 
   @Override
   public void unmarshal(MarshallingContext c) {
-    // TODO: FILL THIS
+    // TODO please implement me!
   }
 }

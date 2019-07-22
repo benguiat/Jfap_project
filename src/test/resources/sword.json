@@ -1,0 +1,12 @@
+{ "id": "Wearable@000001",
+  "onTile": null,
+  "trait": "sword"
+  "effect": { "id": "CharacterModifier@000002",
+              "health": -10,
+              "magic": 0,
+              "power": -2,
+              "howLong": 1 },
+  "weight": 5,
+  "isWeapon": 1,
+  "character": null
+}

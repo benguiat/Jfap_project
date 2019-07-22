@@ -1,10 +1,10 @@
 package de.unisaar.faphack.model.map;
 
+import de.unisaar.faphack.model.Character;
+import de.unisaar.faphack.model.*;
+
 import java.util.Collections;
 import java.util.List;
-
-import de.unisaar.faphack.model.*;
-import de.unisaar.faphack.model.Character;
 
 /**
  * @author
@@ -49,7 +49,7 @@ public abstract class Tile implements Storable, TraitOwner {
    * @return the next tile in direction d
    */
   public Tile getNextTile(Direction d) {
-    // TODO: FILL THIS
+    // TODO please implement me!
     return null;
   }
 
@@ -79,11 +79,14 @@ public abstract class Tile implements Storable, TraitOwner {
   }
 
   public void marshal(MarshallingContext c) {
-    // TODO: FILL THIS
+    // TODO please implement me!
   }
 
   public void unmarshal(MarshallingContext c) {
-    // TODO: FILL THIS
+    // TODO please implement me!
   }
 
+  public boolean pickupItem(Wearable what){
+    return false;
+  }
 }

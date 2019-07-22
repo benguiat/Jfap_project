@@ -3,10 +3,10 @@ package de.unisaar.faphack.model;
 import de.unisaar.faphack.model.map.*;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
-
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,23 +17,27 @@ public class TestUtils {
 
   private static final File testResourceDir = new File("src/test/resources");
 
-  public static void modifyField(Object modifierdObject,boolean inSuperClass, String fieldname, Object value)  {
+  private static void modifyField(Object modifierObject,boolean inSuperClass, String fieldname, Object value)  {
     try {
       Field f;
       if (inSuperClass){
-        f = modifierdObject.getClass().getSuperclass().getDeclaredField(fieldname);
+        f = modifierObject.getClass().getSuperclass().getDeclaredField(fieldname);
       } else {
-        f = modifierdObject.getClass().getDeclaredField(fieldname);
+        f = modifierObject.getClass().getDeclaredField(fieldname);
       }
       f.setAccessible(true);
-      f.set(modifierdObject, value);
+      f.set(modifierObject, value);
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
   public static String getTestResource(String subdir, String name) {
-    return new File(new File(testResourceDir, subdir), name).getPath();
+    return getTestResourceFile(subdir, name).getPath();
+  }
+
+  public static File getTestResourceFile(String subdir, String name) {
+    return new File(new File(testResourceDir, subdir), name);
   }
 
   public static Game createGame(){
@@ -45,44 +49,38 @@ public class TestUtils {
     return game;
   }
 
-  private static World createWorld()  {
+  public static World createWorld()  {
     World world = new World();
     List<Room> mapElements = new ArrayList<>();
     // Create the rooms
-    Room room1 = createSimpleRoom(8,8, world);
+    Room room1 = createSimpleRoom(8,8,  1);
+    modifyField(room1, false,"w", world);
     mapElements.add(room1);
-    Room room2 = createSimpleRoom(7,7, world);
+    Room room2 = createSimpleRoom(7,7, 2);
+    modifyField(room2, false,"w", world);
     mapElements.add(room2);
-    Room room3 = createSimpleRoom(4, 10, world);
+    Room room3 = createSimpleRoom(4, 10, 3);
+    modifyField(room3, false,"w", world);
     mapElements.add(room3);
     modifyField(world, false,"mapElements", mapElements);
 
     // Connect Room 1 and 2 with a hallway
-    Hallway hallway = new Hallway();
     DoorTile doorTile1 = (DoorTile) room1.getTiles()[0][8/2];
-    modifyField(doorTile1, false,"hallway", hallway);
-    modifyField(hallway, true,"fromTile",doorTile1 );
     DoorTile doorTile2 = (DoorTile) room2.getTiles()[0][7/2];
-    modifyField(doorTile2, false,"hallway", hallway);
-    modifyField(hallway, true,"toTile", doorTile2);
-
+    connectTiles(doorTile1, doorTile2);
     // Connect Room 2 and 3 with stairs
-    Stair stair = new Stair();
     StairTile stairTile1 = (StairTile) room2.getTiles()[7/2][7/2];
-    modifyField(stairTile1, false, "stair", stair);
-    modifyField(stair, true, "fromTile", stairTile1);
     StairTile stairTile2 = (StairTile) room3.getTiles()[4/2][10/2];
-    modifyField(stairTile2, false, "stair", stair);
-    modifyField(stair, true, "toTile", stairTile2);
+    connectTiles(stairTile1, stairTile2);
 
     // add two characters to the world
-    Character c1 = addCharacter(room1, 2,2,"Foo");
-    Character c2 = addCharacter(room3, 1,4,"Bar");
+    Character c1 = createBaseCharacter("Foo", 0, 10);
+    Character c2 = createBaseCharacter("Bar", 0, 10);
+    addCharacter(room1, 2,2,c1);
+    addCharacter(room3, 1,4,c2);
 
     // create a bunch of items and place them in the world
-    Item sword = new Wearable();
-    modifyField(sword, false, "weight", 2 );
-    modifyField(sword, false, "isWeapon", true );
+    Item sword = createWearable(2, true);
     modifyField(sword, false, "character",  c1);
     modifyField(c1, false, "activeWeapon", sword );
     Item fountain = new Fixtures();
@@ -90,26 +88,21 @@ public class TestUtils {
     onTile.add(fountain);
     modifyField(fountain, true, "onTile", room1.getTiles()[3][3]);
     modifyField(room1.getTiles()[3][3], false, "items", onTile);
-    Item rottenApple = new Wearable();
-    onTile = new ArrayList<>();
-    onTile.add(rottenApple);
-    modifyField(rottenApple, true, "onTile", room3.getTiles()[2][8]);
-    modifyField(room3.getTiles()[2][8], false, "items", onTile);
 
-
-
+    Wearable rottenApple = createWearable(1, false);
+    placeItemsInRoom(room3,2,8, rottenApple);
+    modifyField(rottenApple, true, "effect", new CharacterModifier(1, 0, 0, 1));
     return world;
   }
 
-  public static Room createSimpleRoom(int x, int y, World world){
+  public static Room createSimpleRoom(int x, int y, int roomNo){
     Room r = new Room();
-    Tile[][] tiles = createTiles(x, y, r);
+    Tile[][] tiles = createTiles(x, y, r, roomNo);
     modifyField(r, false,"tiles", tiles);
-    modifyField(r, false,"w", world);
     return r;
   }
 
-  private static Tile[][] createTiles(int x, int y, Room room){
+  private static Tile[][] createTiles(int x, int y, Room room, int roomNo){
     Tile[][] result = new Tile[x][y];
     for(int i = 0; i < x; i++){
       for(int j = 0; j< y; j++){
@@ -121,22 +114,20 @@ public class TestUtils {
       }
     }
     // place a door
-    result[0][y/2] = new DoorTile(0, y/2 , room);
+    if (roomNo < 3) result[0][y/2] = new DoorTile(0, y/2 , room);
     // place a stair tile right in the center of the room
-    result[x/2][y/2] = new StairTile(x/2, y/2, room);
+    if (roomNo > 0) result[x/2][y/2] = new StairTile(x/2, y/2, room);
     return result;
   }
 
 
 
-  private static Character addCharacter(Room room, int x, int y, String name){
-    Character character = new Character();
+  public static void addCharacter(Room room, int x, int y, Character character){
     List<Character> inhabitants = new ArrayList<>();
     inhabitants.add(character);
     modifyField(room,false, "inhabitants", inhabitants);
-    modifyField(character, false, "tile", room.getTiles()[x][y]);
-    modifyField(character, false, "name", name);
-    return character;
+    placeCharacter(character,room.getTiles()[x][y]);
+    //modifyField(character, false, "tile", room.getTiles()[x][y]);
   }
 
   @Test
@@ -174,9 +165,7 @@ public class TestUtils {
     // r3 should be of size [4][10], have a door at [0][5] and stairs at [2][5]
     assertEquals(4,r3.getTiles().length);
     assertEquals(10,r3.getTiles()[0].length);
-    DoorTile dr3 = (DoorTile) r3.getTiles()[0][5];
     StairTile sr3 = (StairTile) r3.getTiles()[2][5];
-    assertEquals(DoorTile.class, dr3.getClass());
     // both stairs are connected
     assertEquals(sr2.getStair(), sr3.getStair());
     // there should be a character named "Foo" in room1 carrying a sword
@@ -188,10 +177,71 @@ public class TestUtils {
     // there should be a character named "Bar" in room3
     Character bar = r3.getInhabitants().get(0);
     assertNotNull(bar);
-    // there should be an item in room on tile [][]
+    // there should be a fixture in room 1 on tile [3][3]
     assertEquals(Fixtures.class, r1.getTiles()[3][3].onTile().get(0).getClass());
-    // there should be a fixture in room on tile [][]
+    // there should be a Wearable  in room 3 on tile [2][8]
     assertEquals(Wearable.class, r3.getTiles()[2][8].onTile().get(0).getClass());
+  }
+
+  public static void placeItemsInRoom(Room room, int x, int y, Wearable... items) {
+    List<Wearable> onTile = new ArrayList<>(Arrays.asList(items));
+    for(Wearable wearable : onTile){
+      modifyField(wearable, true, "onTile", room.getTiles()[x][y]);
+    }
+    modifyField(room.getTiles()[x][y], false, "items", onTile);
+  }
+
+  public static void placeCharacter(Character testObject, Tile tile) {
+    modifyField(testObject, false, "tile", tile);
+  }
+
+  public static Wearable createWearable(int weight, boolean isWeapon) {
+    Wearable item = new Wearable();
+    modifyField(item, false, "weight", weight);
+    modifyField(item, false, "isWeapon", isWeapon );
+    return item;
+  }
+
+  public static DoorTile createDoorTile(int destructible, boolean isLocked) {
+    DoorTile doorTile = new DoorTile();
+    modifyField(doorTile, false, "locked", isLocked);
+    modifyField(doorTile, true, "destructible", destructible);
+    return doorTile;
+  }
+
+  public static WallTile createWallTile(int destructible){
+    WallTile wallTile = new WallTile();
+    modifyField(wallTile, false, "destructible", destructible);
+    return wallTile;
+  }
+
+  public static Character createBaseCharacter(String name, int power, int maxWeight ){
+    Character character = new Character();
+    modifyField(character, false, "name", name);
+    modifyField(character,false, "items", new ArrayList<>());
+    modifyField(character, false, "maxWeight", maxWeight);
+    modifyField(character, false, "power", power);
+    modifyField(character, false, "role", character.WARRIOR);
+    return character;
+  }
+
+
+  public static Hallway connectTiles(DoorTile t1, DoorTile t2) {
+    Hallway connector = new Hallway();
+    modifyField(connector,true,"fromTile", t1);
+    modifyField(connector,true,"toTile", t2);
+    modifyField(t1, false, "hallway", connector);
+    TestUtils.modifyField(t2, false, "hallway", connector);
+    return connector;
+  }
+
+  public static Stair connectTiles(StairTile t1, StairTile t2) {
+    Stair connector = new Stair();
+    modifyField(connector,true,"fromTile", t1);
+    modifyField(connector,true,"toTile", t1);
+    modifyField(t1, false, "stair", connector);
+    TestUtils.modifyField(t2, false, "stair", connector);
+    return connector;
   }
 
 }

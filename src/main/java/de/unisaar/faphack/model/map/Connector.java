@@ -20,10 +20,10 @@ public abstract class Connector<T extends Tile> implements Storable {
   }
 
   public void marshal(MarshallingContext c) {
-    // TODO: FILL THIS
+    // TODO please implement me!
   }
 
   public void unmarshal(MarshallingContext c) {
-    // TODO: FILL THIS
+    // TODO please implement me!
   }
 }

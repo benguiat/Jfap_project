@@ -32,17 +32,19 @@ public class WallTile extends Tile {
 
   @Override
   public Tile willTake(Character c) {
-    // TODO: FILL THIS
+    // TODO please implement me!
     return null;
   }
 
   @Override
   public void marshal(MarshallingContext c) {
-    // TODO: FILL THIS
+    // TODO please implement me!
   }
 
   @Override
   public void unmarshal(MarshallingContext c) {
-    // TODO: FILL THIS
+    // TODO please implement me!
   }
+
+
 }

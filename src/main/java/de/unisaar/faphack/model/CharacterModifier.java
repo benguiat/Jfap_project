@@ -21,7 +21,7 @@ public class CharacterModifier implements Storable {
    * Apply the changes of this modifier to c, but only if howLong is not zero
    */
   public boolean applyTo(Character c) {
-    // TODO fill this
+    // TODO please implement me!
     return false;
   }
 
@@ -31,11 +31,11 @@ public class CharacterModifier implements Storable {
 
   @Override
   public void marshal(MarshallingContext c) {
-    // TODO fill this
+    // TODO please implement me!
   }
 
   @Override
   public void unmarshal(MarshallingContext c) {
-    // TODO fill this
+    // TODO please implement me!
   }
 }

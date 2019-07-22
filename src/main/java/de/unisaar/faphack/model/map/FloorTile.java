@@ -1,11 +1,12 @@
 package de.unisaar.faphack.model.map;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.unisaar.faphack.model.Character;
 import de.unisaar.faphack.model.Item;
 import de.unisaar.faphack.model.MarshallingContext;
+import de.unisaar.faphack.model.Wearable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author
@@ -37,17 +38,18 @@ public class FloorTile extends Tile {
   }
 
   @Override
+  public boolean pickupItem(Wearable what) {
+    return items.remove(what);
+  }
+
+  @Override
   public void marshal(MarshallingContext c) {
-    // TODO: FILL THIS
+    // TODO please implement me!
   }
 
   @Override
   public void unmarshal(MarshallingContext c) {
-    // TODO: FILL THIS
+    // TODO please implement me!
   }
 
-  @Override
-  public String toString(){
-    return "FloorTile (" + x + ","+y+") in room "+ room;
-  }
 }
