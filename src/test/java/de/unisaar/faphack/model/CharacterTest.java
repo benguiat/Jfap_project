@@ -25,6 +25,7 @@ class CharacterTest {
     moveEffect = new MoveEffect(new Direction(-1,0));
     moveEffect.apply(testObject);
     assertEquals(tiles[1][1], testObject.tile);
+    assertThrows(IllegalArgumentException.class, () ->  new MoveEffect(new Direction(0, 2)));
   }
 
   @Test

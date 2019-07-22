@@ -5,6 +5,7 @@ import de.unisaar.faphack.model.Direction;
 import de.unisaar.faphack.model.MarshallingContext;
 import de.unisaar.faphack.model.Storable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public class Room implements Storable {
   World w;
 
   /** The Characters that currently are in this room */
-  private List<Character> inhabitants;
+  private List<Character> inhabitants = new ArrayList<>();
 
   /**
    * A 2-dimensional Array defining the layout of the tiles in the room.
@@ -25,8 +26,6 @@ public class Room implements Storable {
   private Tile[][] tiles;
 
   public Room(){}
-
-  Room(Tile[][] tiles) { this.tiles = tiles; }
 
   public Tile getNextTile(Tile t, Direction d) {
     // TODO please implement me!

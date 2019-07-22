@@ -238,7 +238,7 @@ public class TestUtils {
   public static Stair connectTiles(StairTile t1, StairTile t2) {
     Stair connector = new Stair();
     modifyField(connector,true,"fromTile", t1);
-    modifyField(connector,true,"toTile", t1);
+    modifyField(connector,true,"toTile", t2);
     modifyField(t1, false, "stair", connector);
     TestUtils.modifyField(t2, false, "stair", connector);
     return connector;

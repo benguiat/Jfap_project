@@ -16,7 +16,7 @@ public class FloorTile extends Tile {
   /**
    * The items placed on this tile.
    */
-  protected List<Item> items;
+  protected List<Item> items = new ArrayList<>();
 
   public FloorTile() {
     trait = FLOOR;

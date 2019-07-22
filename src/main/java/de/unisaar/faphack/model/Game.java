@@ -66,4 +66,7 @@ public class Game implements Storable {
     // TODO please implement me!
   }
 
+  public World getWorld() {
+    return world;
+  }
 }
