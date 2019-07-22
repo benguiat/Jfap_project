@@ -1,13 +1,11 @@
 package de.unisaar.faphack.model;
 
-<<<<<<< HEAD
-=======
 import de.unisaar.faphack.model.effects.MultiplicativeEffect;
 import de.unisaar.faphack.model.map.Tile;
 
 import java.util.ArrayList;
 import java.util.HashSet;
->>>>>>> upstream/master
+
 import java.util.List;
 import java.util.Set;
 
