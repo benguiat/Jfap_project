@@ -94,7 +94,9 @@ public class Character implements Storable, TraitedTileOccupier {
    * @return void
    */
   public void move(Tile destination) {
-    // TODO: FILL THIS
+    // TODO: FILL THIS: KTN, check it!
+
+      this.tile = destination;
   }
 
   /**
@@ -104,8 +106,18 @@ public class Character implements Storable, TraitedTileOccupier {
    * @return boolean
    */
   public boolean pickUp(Wearable what) {
-    // TODO Auto-generated method stub
-    return false;
+    // TODO Auto-generated method stub: CHECK
+    Double sum = 0d;
+    for (Wearable item : items) {
+      Double.sum(sum, item.weight);
+    }
+    if (this.maxWeight > sum) {
+      return false;
+    }
+    else {
+      return true;
+
+    }
   }
 
   /**
