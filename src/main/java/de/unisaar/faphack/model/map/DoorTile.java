@@ -34,8 +34,29 @@ public class DoorTile extends WallTile implements Storable, Observable<DoorTile>
 
   @Override
   public Tile willTake(Character c) {
+    //need to check to see if character is strong enough to open the door
+    //if the door is locked
+    if (this.locked) {
+      //if the character is strong enough to open the door
+      if (c.hasForce() > this.destructible) {
+        return this;
+      } else {
+        return null;
+      }
+
+    }
+    //if the door is open
+    if (this.open){
+      return this;
+  //  }
+  //  else {
+     // return null;
+
+    //}
+
+
     // TODO please implement me!
-    return null;
+   // return null;
   }
 
   @Override
