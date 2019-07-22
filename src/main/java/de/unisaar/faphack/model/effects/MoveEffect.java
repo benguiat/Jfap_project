@@ -9,6 +9,9 @@ public class MoveEffect implements Effect<Character, Boolean> {
 
   public MoveEffect(Direction d) {
     dir = d;
+    if (java.lang.Math.abs(dir.x) > 1 || java.lang.Math.abs(dir.y) > 1){
+        throw new IllegalArgumentException("Your legs are not long enough to move there!");
+    }
   }
 
   /**
@@ -20,7 +23,16 @@ public class MoveEffect implements Effect<Character, Boolean> {
    */
   public Boolean apply(Character c) {
     // TODO: FILL THIS
-    return false;
+    Tile CurrentTile = c.getTile();
+    Tile TargetTile = CurrentTile.getNextTile(dir);
+   
+    if (TargetTile.getTrait() == "wall") {
+        return false;
+    }
+    else {
+        c.move(TargetTile);
+        return true;
+    }
   }
 
 }
