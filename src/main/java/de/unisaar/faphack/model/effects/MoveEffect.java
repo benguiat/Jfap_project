@@ -26,7 +26,7 @@ public class MoveEffect implements Effect<Character, Boolean> {
     Tile CurrentTile = c.getTile();
     Tile TargetTile = CurrentTile.getNextTile(dir);
    
-    if (TargetTile.getTrait() == "wall") {
+    if (TargetTile.getTrait() == "wall" || TargetTile.getTrait() == "door") {
         return false;
     }
     else {
