@@ -29,8 +29,10 @@ public class Room implements Storable {
   Room(Tile[][] tiles) { this.tiles = tiles; }
 
   public Tile getNextTile(Tile t, Direction d) {
-    // TODO please implement me!
-    return null;
+      int x = t.getX() + d.x;
+      int y = t.getY() + d.y;
+      
+      return tiles[x][y];
   }
 
   public Tile[][] getTiles() {
