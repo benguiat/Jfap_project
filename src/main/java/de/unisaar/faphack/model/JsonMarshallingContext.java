@@ -9,6 +9,8 @@ import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class JsonMarshallingContext implements MarshallingContext {
 
@@ -30,7 +32,20 @@ public class JsonMarshallingContext implements MarshallingContext {
 
   @Override
   public void save(Storable s) {
-    // TODO Auto-generated method stub
+    JSONObject obj = new JSONObject();
+    
+    obj.put("game", s);
+    
+    try (FileWriter file = new FileWriter("employees.json")) {
+ 
+            file.write(obj.toJSONString());
+            file.flush();
+ 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+    
   }
 
   public Storable read() {
