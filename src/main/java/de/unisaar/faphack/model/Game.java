@@ -54,7 +54,16 @@ public class Game implements Storable {
    */
   public boolean pickUp(Character who, Item item) {
     // TODO please implement me!
-    return false;
+    if (who.getTile() == item.getTile()) {
+        Tile itemTile = item.getTile();
+        itemTile.onTile().remove(item);
+        who.items.add((Wearable) item);
+        return true;
+    }
+    else {
+        return false;
+    }
+    
   }
 
   /**
