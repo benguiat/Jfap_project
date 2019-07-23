@@ -174,6 +174,36 @@ public class Character implements Storable, TraitedTileOccupier {
      * stamina, quality of different armors, possibly even in the different
      * dimensions.
          */
+        Character affected = this;
+
+        // turns is for how many turns will the effects occur
+        int turns = eff.howLong();
+
+        while (turns > 0) {
+            // implement effects: health, magic, power
+
+            if (affected.armor.isEmpty()) {
+                affected.health += eff.health;
+                affected.magic += eff.magic;
+                affected.power += eff.power;
+            } else {
+                // for every armor in affected.armor we gotta check damage
+
+                for (Wearable arm : armor) {
+
+//                    if only it were that easy...
+//                    double newHealth = eff.health * 0.5;
+//                    double newMagic = eff.magic * 0.0;
+//                    double newPower = eff.power * 0.0;
+
+//                    affected.health += newHealth;
+//                    affected.magic += newMagic;
+//                    affected.power += newPower;
+                }
+            }
+
+            turns -= 1;
+        }
 
     }
 
