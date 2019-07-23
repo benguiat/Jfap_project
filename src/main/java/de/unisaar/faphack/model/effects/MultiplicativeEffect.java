@@ -28,8 +28,12 @@ public class MultiplicativeEffect extends ModifyingEffect {
     public CharacterModifier apply(CharacterModifier c) {
         
         // WHAT THE HELL IS THIS SUPPOSED TO DO
-        
-        return null;
+        CharacterModifier cm = new CharacterModifier();
+        int vr = (int) (this.health * c.health);
+        cm.health = (int) (this.health * c.health);
+        cm.power = (int) (this.power * c.power);
+        cm.magic = (int) (this.magic * c.magic);
+        return cm;
     }
 
 }

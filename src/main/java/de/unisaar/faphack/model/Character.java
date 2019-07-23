@@ -12,6 +12,8 @@ import java.util.Set;
 import de.unisaar.faphack.model.effects.MultiplicativeEffect;
 import de.unisaar.faphack.model.map.Tile;
 
+import de.unisaar.faphack.model.effects.ModifyingEffect;
+
 /**
  * @author
  *
@@ -59,7 +61,7 @@ public class Character implements Storable, TraitedTileOccupier {
     /**
      * This might be shield / bodyarmor / etc.
      */
-    protected List<Wearable> armor = new ArrayList<>();
+    protected List<Armor> armor = new ArrayList<>();
 
     /**
      * The maximal amount of weight the character can carry. The sum of the
@@ -186,19 +188,23 @@ public class Character implements Storable, TraitedTileOccupier {
                 affected.health += eff.health;
                 affected.magic += eff.magic;
                 affected.power += eff.power;
-            } else {
+            } 
+            
+            else {
                 // for every armor in affected.armor we gotta check damage
 
-                for (Wearable arm : armor) {
+                for (Armor arm : armor) {
 
-//                    if only it were that easy...
-//                    double newHealth = eff.health * 0.5;
-//                    double newMagic = eff.magic * 0.0;
-//                    double newPower = eff.power * 0.0;
-
-//                    affected.health += newHealth;
-//                    affected.magic += newMagic;
-//                    affected.power += newPower;
+//                    if only it were that easy..
+                    ModifyingEffect armCm = arm.getModifyingEffect();
+                    CharacterModifier newEff = armCm.apply(eff);
+                    
+                    //double armPower = armCm.power;
+                    affected.health += newEff.health;
+                    affected.magic += newEff.magic;
+                    affected.power += newEff.power;
+       
+                    
                 }
             }
 

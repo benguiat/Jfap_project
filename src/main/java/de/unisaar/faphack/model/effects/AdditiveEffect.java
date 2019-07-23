@@ -29,6 +29,7 @@ public class AdditiveEffect extends ModifyingEffect {
    */
   public CharacterModifier apply(CharacterModifier c) {
     // TODO: FILL THIS
+    
     return null;
   }
 
