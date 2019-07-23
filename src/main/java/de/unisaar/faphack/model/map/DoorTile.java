@@ -36,20 +36,36 @@ public class DoorTile extends WallTile implements Storable, Observable<DoorTile>
   public Tile willTake(Character c) {
     //need to check to see if character is strong enough to open the door
     //if the door is locked
-    if (this.locked) {
+    if (this.open) {
+        Hallway hw = this.getHallway();
+        Tile t1 = hw.to(); 
+        Tile t2 = hw.from();
+        if (this == t1) {
+            return t2;
+        }
+        else {
+            return t1;
+        }
+    }
+    else {
       //if the character is strong enough to open the door
       if (c.hasForce() > this.destructible) {
-        return this;
-      } else {
+          Hallway hw = this.getHallway();
+          Tile t1 = hw.to(); 
+        Tile t2 = hw.from();
+        if (this == t1) {
+            return t2;
+        }
+        else {
+            return t1;
+        }
+      } 
+      else {
         return null;
       }
 
     }
     //if the door is open
-    if (this.open) {
-      return this;
-    }
-    return null;
   }
 
     //  }
@@ -73,7 +89,7 @@ public class DoorTile extends WallTile implements Storable, Observable<DoorTile>
     // TODO please implement me!
   }
 
-  public Hallway getHallway(){
+public Hallway getHallway(){
     return hallway;
   }
 

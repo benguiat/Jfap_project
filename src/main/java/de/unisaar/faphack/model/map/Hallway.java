@@ -7,6 +7,7 @@ package de.unisaar.faphack.model.map;
 public class Hallway extends Connector<DoorTile> {
 
   public Hallway() {
+      
 
   }
 
