@@ -39,14 +39,37 @@ public class Room implements Storable {
    *
    * @param t the start tile
    * @param d the direction to follow
-   * @return
-   */
-  public Tile getNextTile(Tile t, Direction d) {
-      int x = t.getX() + d.x;
-      int y = t.getY() + d.y;
-      
-      return tiles[x][y];
-  }
+     * @return
+     */
+    public Tile getNextTile(Tile t, Direction d) {
+
+        int x;
+        int y;
+
+        if (Math.abs(d.x) >= (this.tiles.length - 2) || Math.abs(d.y) >= (this.tiles.length - 2)) {
+            if (d.x > 0 && d.y > 0) {
+                x = t.getX() + (this.tiles.length - 2);
+                y = t.getY() + (this.tiles.length - 2);
+            } else if (d.x < 0 && d.y > 0) {
+                x = t.getX() - (this.tiles.length - 2);
+                y = t.getY() + (this.tiles.length - 2);
+            } else if (d.x < 0 && d.y < 0) {
+                x = t.getX() - (this.tiles.length - 2);
+                y = t.getY() - (this.tiles.length - 2);
+            } else if (d.x > 0 && d.y < 0){
+               
+                x = t.getX() + (this.tiles.length - 2);
+                y = t.getY() - (this.tiles.length - 2);
+            } else {
+                x = t.getX() + d.x;
+                y = t.getY() + d.y;
+            }
+        } else {
+            x = t.getX() + d.x;
+            y = t.getY() + d.y;
+        }
+        return tiles[x][y];
+    }
 
 
   private List<Tile> computeDDA(Tile t, Direction d){
