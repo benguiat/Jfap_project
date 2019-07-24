@@ -21,8 +21,17 @@ public class CharacterModifier implements Storable {
    * Apply the changes of this modifier to c, but only if howLong is not zero
    */
   public boolean applyTo(Character c) {
-    // TODO please implement me!
-    return false;
+    
+     if (howLong > 0){
+         c.health += health;
+         c.magic += magic;
+         c.power += power;
+         return true;
+     }
+     else {
+        return false; 
+     }
+      
   }
 
   public int howLong() {
