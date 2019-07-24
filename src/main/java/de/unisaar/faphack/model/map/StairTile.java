@@ -32,6 +32,7 @@ public class StairTile extends Tile {
   @Override
   public Tile willTake(Character c) {
     // TODO please implement me!
+
    return null;
   }
 

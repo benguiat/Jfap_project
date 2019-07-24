@@ -43,9 +43,9 @@ public abstract class Tile implements Storable, TraitOwner {
     return y;
   }
 
-  public Room getRoom() {
-    return room;
-  }
+  //public Room getRoom() {
+   // return room;
+  //}
 
   /**
    * Given the "vector" d, what's the tile you get in return? (Hint: ask the room)
@@ -104,4 +104,8 @@ public abstract class Tile implements Storable, TraitOwner {
   public boolean isOccupied(){
     return false;
   }
+
+    public Room getRoom() {
+        return room;
+    }
 }

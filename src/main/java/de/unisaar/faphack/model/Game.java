@@ -64,19 +64,25 @@ public class Game implements Storable {
    * @param item the item to be picked up
    * @return boolean <code>true</code> if the character managed to pickup the item, <code>false</code> otherwise
    */
-  public boolean pickUp(Character who, Item item) {
-    // TODO please implement me!
-    if (who.getTile() == item.getTile()) {
-        Tile itemTile = item.getTile();
-        itemTile.onTile().remove(item);
-        who.items.add((Wearable) item);
-        return true;
+    public boolean pickUp(Character who, Item item) {
+        // TODO please implement me!
+        if (who.getTile() == item.getTile()) {
+            Tile itemTile = item.getTile();
+
+            if (item instanceof Wearable) {
+                itemTile.onTile().remove(item);
+                String CurrentTrait = item.getTrait();
+                who.items.add((Wearable) item);
+
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
     }
-    else {
-        return false;
-    }
-    
-  }
 
   /**
    * Removes an item from the given characters inventory and places it on the tile
@@ -104,7 +110,6 @@ public class Game implements Storable {
   @Override
   public void marshal(MarshallingContext c) {
     c.write("game", this);
-    
   }
 
   @Override
