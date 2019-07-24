@@ -38,7 +38,14 @@ public class FloorTile extends Tile {
    */
   @Override
   public Tile willTake(Character c) {
-    return this;
+      
+    //System.out.println(this.isOccupied());
+    if (this.isOccupied() == true){
+        return null;
+    }
+    else{
+      return this;  
+    }
   }
 
   /** FloorTiles can have items on them */
@@ -72,7 +79,9 @@ public class FloorTile extends Tile {
    */
   @Override
   public boolean isOccupied(){
-    // TODO please implement me!
+    List inhabitants = new ArrayList();
+    inhabitants = this.room.getInhabitants();
+    System.out.println(inhabitants);
     return false;
   }
 

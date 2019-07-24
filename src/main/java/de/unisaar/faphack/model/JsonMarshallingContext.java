@@ -31,6 +31,7 @@ public class JsonMarshallingContext implements MarshallingContext {
     stack = new ArrayDeque<>();
     factory = fact;
     writecache = new IdentityHashMap<Storable, String>();
+    readcache = new IdentityHashMap<String, Storable>();
  
   }
   
@@ -55,7 +56,7 @@ public class JsonMarshallingContext implements MarshallingContext {
    
       s.marshal(this);
       
-      System.out.println(writecache.get("game"));
+      System.out.println(readcache.get("game"));
       
       stack.pop();
       
@@ -73,6 +74,7 @@ public class JsonMarshallingContext implements MarshallingContext {
 
   @Override
   public void write(String key, Storable object) {
+    readcache.put(key, object);
     writecache.put(object, key);
 
   }
