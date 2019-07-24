@@ -9,6 +9,7 @@ import java.util.Set;
 import de.unisaar.faphack.model.effects.MultiplicativeEffect;
 import de.unisaar.faphack.model.map.Room;
 import de.unisaar.faphack.model.map.Tile;
+import java.util.Iterator;
 
 /**
  * @author
@@ -118,22 +119,31 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
      * <code>false</code> otherwise
      */
     public boolean pickUp(Wearable what) {
-        // TODO Auto-generated method stub: CHECK
+
         Tile CharLoc = this.tile;
         Tile ItemLoc = what.getTile();
 
+        // calculate the weight that the char is currently carrying
         Double sum = 0.0;
         for (Wearable item : items) {
             sum = Double.sum(sum, item.weight);
         }
+
         if (this.maxWeight > sum && CharLoc == ItemLoc) {
             ItemLoc.onTile().remove(what);
             this.items.add(what);
+            // we have to declare that the item's char is Character
+            what.character = this;
+            // we have to remove any trace of Tile from the Item
+            what.onTile = null;
+
             return true;
         } else {
+
             return false;
 
         }
+
     }
 
     /**
@@ -214,32 +224,31 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
         // turns is for how many turns will the effects occur
         int turns = eff.howLong();
 
-        while (turns > 0) {
-            // implement effects: health, magic, power
+//        while (turns > 0) {
+        // implement effects: health, magic, power
+        if (affected.armor.isEmpty()) {
+            affected.health += eff.health;
+            affected.magic += eff.magic;
+            affected.power += eff.power;
+        } else {
+            // for every armor in affected.armor we gotta check damage
 
-            if (affected.armor.isEmpty()) {
-                affected.health += eff.health;
-                affected.magic += eff.magic;
-                affected.power += eff.power;
-            } else {
-                // for every armor in affected.armor we gotta check damage
+            CharacterModifier newEff = eff;
 
-                for (Armor arm : armor) {
+            for (Armor arm : armor) {
+                ModifyingEffect armCm = arm.getModifyingEffect();
+                newEff = armCm.apply(newEff);
 
-                    ModifyingEffect armCm = arm.getModifyingEffect();
-                    CharacterModifier newEff = armCm.apply(eff);
-
-                    //double armPower = armCm.power;
-                    affected.health += newEff.health;
-                    affected.magic += newEff.magic;
-                    affected.power += newEff.power;
-
-                }
             }
 
-            turns -= 1;
+            affected.health += newEff.health;
+            affected.magic += newEff.magic;
+            affected.power += newEff.power;
+
         }
 
+//            turns -= 1;
+//        }
     }
 
     /**
@@ -248,18 +257,16 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
     public void applyItem(CharacterModifier eff) {
 
         // turns is for how many turns will the effects occur
-        int turns = eff.howLong();
+//        int turns = eff.howLong();
+//        while (turns > 0) {
+        // implement effects: health, magic, power
+        Character affected = this;
+        affected.health += eff.health;
+        affected.magic += eff.magic;
+        affected.power += eff.power;
 
-        while (turns > 0) {
-            // implement effects: health, magic, power
-            Character affected = this;
-            affected.health += eff.health;
-            affected.magic += eff.magic;
-            affected.power += eff.power;
-
-            turns -= 1;
-        }
-
+//            turns -= 1;
+//        }
     }
 
     /**
@@ -270,8 +277,28 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
      * <code>false</code> otherwise
      */
     public boolean dropItem(Wearable item) {
-        // TODO please implement me!
-        return false;
+        // drop should only work for items that exist in character
+        if (this.items.contains(item)) {
+            // place item in the Tile that the Char stands on
+            Tile CharLoc = this.tile;
+            CharLoc.onTile().add(item);
+
+            if (item.isWeapon) {
+                //if the item is the active weapon, make love not war
+                this.activeWeapon = null;
+            } else if (this.armor.contains(item)) {
+                // if the item is armor, you also remove it from armor list
+                this.armor.remove(item);
+            }
+            // in any case, you have to remove it from the items list 
+            this.items.remove(item);
+
+            return true;
+        } else {
+            // this means that there's no such item in items list
+            return false;
+        }
+
     }
 
     /**
@@ -282,8 +309,22 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
      * otherwise
      */
     public boolean equipItem(Wearable wearable) {
-        // TODO please implement me!
-        return false;
+
+        // First thing first, the wearable has to be in the inventory
+        if (this.items.contains(wearable)) {
+            if (wearable.isWeapon) {
+                // if the wearable is a weapon, Annie get your gun
+                this.activeWeapon = wearable;
+            } else if (wearable.getTrait() == armor) {
+                // if the wearable is an armor, put it in the armor list
+                this.armor.add(wearable);
+            }
+            return true;
+        } else {
+            // then you tried to put on sth you don't own you dirty thief
+            return false;
+        }
+
     }
 
     @Override
