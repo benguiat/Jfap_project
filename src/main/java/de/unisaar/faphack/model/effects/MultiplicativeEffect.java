@@ -26,8 +26,7 @@ public class MultiplicativeEffect extends ModifyingEffect {
      * @return void
      */
     public CharacterModifier apply(CharacterModifier c) {
-        
-        // WHAT THE HELL IS THIS SUPPOSED TO DO
+
         CharacterModifier cm = new CharacterModifier();
         int vr = (int) (this.health * c.health);
         cm.health = (int) (this.health * c.health);

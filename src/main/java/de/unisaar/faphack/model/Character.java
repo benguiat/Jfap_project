@@ -1,6 +1,6 @@
 package de.unisaar.faphack.model;
 
-import de.unisaar.faphack.model.effects.MultiplicativeEffect;
+import de.unisaar.faphack.model.effects.AdditiveEffect;
 import de.unisaar.faphack.model.map.Tile;
 
 import java.util.ArrayList;
@@ -188,22 +188,19 @@ public class Character implements Storable, TraitedTileOccupier {
                 affected.health += eff.health;
                 affected.magic += eff.magic;
                 affected.power += eff.power;
-            } 
-            
-            else {
+            } else {
                 // for every armor in affected.armor we gotta check damage
 
                 for (Armor arm : armor) {
 
-//                    if only it were that easy..
                     ModifyingEffect armCm = arm.getModifyingEffect();
                     CharacterModifier newEff = armCm.apply(eff);
-                    
+
                     //double armPower = armCm.power;
                     affected.health += newEff.health;
                     affected.magic += newEff.magic;
                     affected.power += newEff.power;
-       
+
                     
                 }
             }
@@ -216,7 +213,7 @@ public class Character implements Storable, TraitedTileOccupier {
     /**
      * Apply the effects of, e.g., a poisoning, eating something, etc.
      */
-    public void applyItem(CharacterModifier eff) {
+   public void applyItem(CharacterModifier eff) {
 
         // turns is for how many turns will the effects occur
         int turns = eff.howLong();
