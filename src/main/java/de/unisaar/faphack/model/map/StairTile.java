@@ -34,11 +34,19 @@ public class StairTile extends Tile {
     // TODO please implement me!
     Stair stair = this.getStair();
     boolean oneWay = stair.onlyDown();
-    if (oneWay == false) {
-        Tile toTile = stair.to();
-        Tile fromTile = stair.from();
+    Tile toTile = stair.to();
+    Tile fromTile = stair.from();
+    if (oneWay == true && this == toTile) {
+        return null;
+    } 
+    else {
+        if (this == toTile) {
+            return fromTile;
+        }
+        else {
+            return toTile;
+        }
     }
-   return null;
   }
 
   /** Return non-null if this is a trap */
