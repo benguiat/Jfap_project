@@ -29,6 +29,7 @@ public class JsonMarshallingContext implements MarshallingContext {
   public JsonMarshallingContext(File f, StorableFactory fact) {
     file = f;
     stack = new ArrayDeque<>();
+    factory = fact;
   }
   
   private JSONObject toJson(Storable s){
@@ -53,10 +54,11 @@ public class JsonMarshallingContext implements MarshallingContext {
       JSONObject obj = toJson(s);
       
       
-      
       stack.push(obj);
-      s.marshal(this);
-      System.out.print(stack);
+   
+      
+      //s.marshal(this);
+      
       stack.pop();
       
       
