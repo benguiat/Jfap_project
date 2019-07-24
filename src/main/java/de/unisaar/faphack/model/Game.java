@@ -103,7 +103,6 @@ public class Game implements Storable {
 
   @Override
   public void marshal(MarshallingContext c) {
-      
     c.write("game", this);
   }
 

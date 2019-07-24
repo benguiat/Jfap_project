@@ -30,20 +30,17 @@ public class JsonMarshallingContext implements MarshallingContext {
     file = f;
     stack = new ArrayDeque<>();
     factory = fact;
-    writecache = new IdentityHashMap<Object, String>();
+    writecache = new IdentityHashMap<Storable, String>();
+ 
   }
   
   private JSONObject toJson(Storable s){
       
       JSONObject obj = new JSONObject();
       
-      
-      
       obj.put("id", s + "@" + idGenerator);
       
       idGenerator += 1;
-      
-    
       
       return obj;
   } 
@@ -57,6 +54,8 @@ public class JsonMarshallingContext implements MarshallingContext {
       stack.push(obj);
    
       s.marshal(this);
+      
+      System.out.println(writecache.get("game"));
       
       stack.pop();
       

@@ -1,5 +1,6 @@
 package de.unisaar.faphack.model;
 
+import de.unisaar.faphack.model.effects.ModifyingEffect;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
