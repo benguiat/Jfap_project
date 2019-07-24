@@ -49,7 +49,7 @@ public class DoorTile extends WallTile implements Storable, Observable<DoorTile>
     }
     else {
       //if the character is strong enough to open the door
-      if (c.hasForce() > this.destructible) {
+      if (c.getPower() > this.destructible) {
           Hallway hw = this.getHallway();
           Tile t1 = hw.to(); 
         Tile t2 = hw.from();

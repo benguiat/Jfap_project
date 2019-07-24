@@ -33,7 +33,7 @@ public class WallTile extends Tile {
   @Override
   public Tile willTake(Character c) {
    
-      int charPower = c.hasForce();
+      int charPower = c.getPower();
       int wallPower = this.destructible;
       
       if (wallPower == 0) {
