@@ -34,23 +34,28 @@ public class JsonMarshallingContext implements MarshallingContext {
       
       JSONObject obj = new JSONObject();
       
+      
       obj.put("id", idGenerator);
       obj.put("class", s);
       
       idGenerator += 1;
       
+    
       
       return obj;
   } 
+
 
   @Override
   public void save(Storable s) {
 
       JSONObject obj = toJson(s);
       
-      stack.addFirst(obj);
+      
+      stack.push(obj);
       s.marshal(this);
-      stack.removeFirst();
+      System.out.print(stack);
+      stack.pop();
       
       
     
