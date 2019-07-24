@@ -32,7 +32,12 @@ public class StairTile extends Tile {
   @Override
   public Tile willTake(Character c) {
     // TODO please implement me!
-
+    Stair stair = this.getStair();
+    boolean oneWay = stair.onlyDown();
+    if (oneWay == false) {
+        Tile toTile = stair.to();
+        Tile fromTile = stair.from();
+    }
    return null;
   }
 
