@@ -50,5 +50,8 @@ implements Effect<CharacterModifier, CharacterModifier>, Storable {
   @Override
   public void unmarshal(MarshallingContext c) {
     // TODO: FILL THIS
+    c.readInt("health");
+    c.readInt("magic");
+    c.readInt("power");
   }
 }
