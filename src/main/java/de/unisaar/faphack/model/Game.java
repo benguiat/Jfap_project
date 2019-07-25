@@ -33,8 +33,13 @@ public class Game implements Storable {
    */
   public boolean move(Character whom, Direction direction) {
     // TODO please implement me!
+    if (whom.power > 0) {
     if (Math.abs(direction.x) + Math.abs(direction.y) <= 1) {
         return true;
+    }
+    else {
+        return false;
+    }
     }
     else {
         return false;
