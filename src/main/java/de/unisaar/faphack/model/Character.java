@@ -104,10 +104,19 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
      * @param destination
      * @return void
      */
-    public void move(Tile destination) {
-        tile = destination;
+      public void move(Tile destination) {
+    if (tile != null) {
+      Room current = tile.getRoom();
+      if (destination.getRoom() != current) {
+        current.getInhabitants().remove(this);
+        destination.getRoom().getInhabitants().add(this);
+      }
+    } else {
+      destination.getRoom().getInhabitants().add(this);
     }
-    
+    tile = destination;
+  }
+
     /**
      * Pick up the given Wearable. Returns true if the action is possible. The
      * character can only pickup an item if it is 1. on the same tile 2. the
@@ -290,7 +299,7 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
                 // if the item is armor, you also remove it from armor list
                 this.armor.remove(item);
             }
-            // in any case, you have to remove it from the items list 
+            // in any case, you have to remove it from the items list
             this.items.remove(item);
 
             return true;
@@ -325,9 +334,9 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
             return false;
         }
     }
-    
-    
-    
+
+
+
 
     @Override
     public String getTrait() {

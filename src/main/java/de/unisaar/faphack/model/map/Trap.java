@@ -19,6 +19,8 @@ public class Trap extends Fixtures {
      */
     protected StairTile trapDoor = null;
 
+    protected CharacterModifier modifier;
+
     public Trap() {
 
     }

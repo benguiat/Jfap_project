@@ -114,7 +114,7 @@ public abstract class Tile implements Storable, TraitOwner {
         return false;
     }
 
-    public Room getRoom() {
-        return room;
-    }
+    //public Room getRoom() {
+    //    return room;
+    //}
 }

@@ -38,12 +38,12 @@ public class FloorTile extends Tile {
    */
   @Override
   public Tile willTake(Character c) {
-      
+
     if (this.isOccupied() == true){
-        return null;  
+        return null;
     }
     else{
-      return this;  
+      return this;
     }
   }
 
@@ -64,17 +64,15 @@ public class FloorTile extends Tile {
 
   @Override
   public void marshal(MarshallingContext c) {
-    // TODO please implement me!
     super.marshal(c);
     c.write("items", this.items);
-  
+
   }
 
   @Override
   public void unmarshal(MarshallingContext c) {
-    // TODO please implement me!
     c.read("items");
- 
+
   }
 
   /**
