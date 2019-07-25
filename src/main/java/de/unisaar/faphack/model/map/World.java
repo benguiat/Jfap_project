@@ -24,15 +24,16 @@ public class World implements Storable {
     @Override
     public void marshal(MarshallingContext c) {
         c.write("mapElements", this.mapElements);
+        c.write("game", this.g);
     }
 
     @Override
     public void unmarshal(MarshallingContext c) {
         List<Room> mapE = new ArrayList<>(); // this might be crap
-        
         c.readAll("mapElements", mapE);
-        this.g = c.read("game");
         mapElements = mapE;
+        this.g = c.read("game");
+        
     }
 
     public List<Room> getMapElements() {
