@@ -108,6 +108,8 @@ public class Room implements Storable {
 
   @Override
   public void marshal(MarshallingContext c) {
+    c.write("inhabitants", this.inhabitants);
+    c.write("tiles", this.tiles);
     // TODO please implement me!
   }
 
