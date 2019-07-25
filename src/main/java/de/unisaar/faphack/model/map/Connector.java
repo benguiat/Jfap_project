@@ -21,6 +21,8 @@ public abstract class Connector<T extends Tile> implements Storable {
 
   public void marshal(MarshallingContext c) {
     // TODO please implement me!
+    c.write("fromTile", this.fromTile);
+    c.write("toTile", this.toTile);
   }
 
   public void unmarshal(MarshallingContext c) {
