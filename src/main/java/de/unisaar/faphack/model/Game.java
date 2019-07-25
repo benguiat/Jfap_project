@@ -35,7 +35,12 @@ public class Game implements Storable {
    */
   public boolean move(Character whom, Direction direction) {
     // TODO please implement me!
-    return false;
+    if (Math.abs(direction.x) + Math.abs(direction.y) <= 1) {
+        return true;
+    }
+    else {
+        return false;
+    }
   }
 
   /**
@@ -43,6 +48,10 @@ public class Game implements Storable {
   */
   public boolean rest(Character whom){
     // TODO please implement me!
+    Direction dir = new Direction(0,0);
+    Tile newTile = whom.getTile().getNextTile(dir);
+    whom.move(newTile);
+    whom.power += 5;
     return true;
   }
 
@@ -66,13 +75,14 @@ public class Game implements Storable {
    */
     public boolean pickUp(Character who, Item item) {
         // TODO please implement me!
-        if (who.getTile() == item.getTile()) {
+         if (who.getTile() == item.getTile()) {
             Tile itemTile = item.getTile();
 
             if (item instanceof Wearable) {
+                ((Wearable) item).onTile = null;
                 itemTile.onTile().remove(item);
-                String CurrentTrait = item.getTrait();
                 who.items.add((Wearable) item);
+                ((Wearable) item).character = who;
 
                 return true;
             } else {
@@ -92,7 +102,21 @@ public class Game implements Storable {
    */
   public boolean drop(Character who, Wearable what){
     // TODO please implement me!
-    return false;
+    if (who.items.contains(what) || who.armor.contains(what)) {
+        if (who.items.contains(what)){
+            who.items.remove(who);
+        }
+        else {
+            who.armor.remove(who);
+        }
+        Tile CharTile = who.getTile();
+        CharTile.addItem(what);
+        what.onTile = CharTile;
+        return true;
+    }
+    else {
+        return false;
+    }
   }
 
   /**
@@ -103,8 +127,21 @@ public class Game implements Storable {
    * @return <code>true</code> the action was successful, <code>false</code> otherwise
    */
   public boolean equip(Character who, Wearable what){
-    // TODO please implement me!
-    return false;
+        if (who.items.contains(what) || who.armor.contains(what)) {
+        if (who.items.contains(what)){
+            who.items.remove(who);
+        }
+        else {
+            who.armor.remove(who);
+        }
+        Tile CharTile = who.getTile();
+        CharTile.addItem(what);
+        what.onTile = CharTile;
+        return true;
+    }
+    else {
+        return false;
+    }
   }
 
   @Override

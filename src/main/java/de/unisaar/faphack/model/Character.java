@@ -315,17 +315,19 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
             if (wearable.isWeapon) {
                 // if the wearable is a weapon, Annie get your gun
                 this.activeWeapon = wearable;
-            } else if (wearable.getTrait() == armor) {
+            } else if (wearable instanceof Armor) {
                 // if the wearable is an armor, put it in the armor list
-                this.armor.add(wearable);
+                this.armor.add((Armor) wearable);
             }
             return true;
         } else {
             // then you tried to put on sth you don't own you dirty thief
             return false;
         }
-
     }
+    
+    
+    
 
     @Override
     public String getTrait() {
