@@ -35,6 +35,8 @@ implements Storable, TraitedTileOccupier {
 
   public void unmarshal(MarshallingContext c) {
     // TODO please implement me!
+    c.read("onTile");
+    c.read("effect");
   }
 
   @Override
