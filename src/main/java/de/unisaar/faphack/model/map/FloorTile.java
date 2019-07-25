@@ -38,12 +38,17 @@ public class FloorTile extends Tile {
    */
   @Override
   public Tile willTake(Character c) {
-
-    if (this.isOccupied() == true){
-        return null;
+    //check to see if the destination tile does not equal the current tile
+    Tile currentTile = c.getTile();
+    Tile destinationTile = this;
+    if (this.isOccupied() == false){
+      return this;
+    }
+    if (currentTile == destinationTile){
+        return this;
     }
     else{
-      return this;
+      return null;
     }
   }
 
