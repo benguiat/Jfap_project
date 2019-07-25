@@ -30,5 +30,6 @@ public class Trap extends Fixtures {
 
   public void unmarshal(MarshallingContext c) {
     // TODO please implement me!
+    c.read("trapdoor");
   }
 }

@@ -58,6 +58,7 @@ public class WallTile extends Tile {
   @Override
   public void unmarshal(MarshallingContext c) {
     // TODO please implement me!
+      c.read("destructible");
   }
 
 
