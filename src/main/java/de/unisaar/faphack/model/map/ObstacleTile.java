@@ -7,21 +7,23 @@ import de.unisaar.faphack.model.MarshallingContext;
  */
 public class ObstacleTile extends WallTile {
 
-  /** default trait: boulder */
-  public ObstacleTile() {
-    trait = BOULDER;
-  }
+    /**
+     * default trait: boulder
+     */
+    public ObstacleTile() {
+        trait = BOULDER;
+    }
 
-  @Override
-  public void marshal(MarshallingContext c) {
-    // TODO please implement me!
-    super.marshal(c);
-    c.write("trait", this.trait);
-  }
+    @Override
+    public void marshal(MarshallingContext c) {
 
-  @Override
-  public void unmarshal(MarshallingContext c) {
-    // TODO please implement me!
-    c.read("trait");
-  }
+        super.marshal(c);
+        c.write("trait", this.trait);
+    }
+
+    @Override
+    public void unmarshal(MarshallingContext c) {
+
+        c.read("trait");
+    }
 }

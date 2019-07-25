@@ -94,7 +94,7 @@ public abstract class Tile implements Storable, TraitOwner {
 
     public void unmarshal(MarshallingContext c) {
         room = c.read("room");
-        trait = c.read("trait");
+        trait = c.readString("trait");
         x = c.readInt("x");
         y = c.readInt("y");
     }

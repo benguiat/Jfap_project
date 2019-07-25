@@ -1,3 +1,4 @@
+
 package de.unisaar.faphack.model.map;
 
 import de.unisaar.faphack.model.Game;
@@ -27,7 +28,9 @@ public class World implements Storable {
 
     @Override
     public void unmarshal(MarshallingContext c) {
-        mapElements = c.read("mapElements");
+        List<Room> mapE = new ArrayList<>(); // this might be crap
+        
+        mapElements = c.readAll("mapElements", mapE);
     }
 
     public List<Room> getMapElements() {

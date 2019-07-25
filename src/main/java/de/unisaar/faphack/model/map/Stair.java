@@ -41,10 +41,9 @@ public class Stair extends Connector<StairTile> {
     public void unmarshal(MarshallingContext c) {
         super.unmarshal(c);
 
-        fromTile = c.read("fromTile");
-        toTile = c.read("toTile");
-
-        int intOneWay = 1;
-        oneWay = c.read("oneWay").equals(intOneWay);
+        fromTile = c.read("fromTile"); // should this be readBoard?????
+        toTile = c.read("toTile"); // should this be readBoard?????
+        
+        oneWay = (c.readInt("oneWay") == 1);
     }
 }
