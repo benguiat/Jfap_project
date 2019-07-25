@@ -356,18 +356,18 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
     @Override
     public void unmarshal(MarshallingContext c) {
         // TODO please implement me!
-        this.name = c.read("name");
-        this.role = c.read("role");
-        this.activeEffects = c.read("activeEffects");
+        this.name = c.readString("name");
+        this.role = c.readString("role");
+        this.activeEffects = c.readAll("activeEffects");
         this.activeWeapon = c.read("activeWeapon");
-        this.armor = c.read("armor");
-        this.currentWeight = c.read("currentWeight");
-        this.health = c.read("health");
-        this.items = c.read("items");
-        this.level = c.read("level");
-        this.magic = c.read("magic");
-        this.maxWeight = c.read("maxWeight");
-        this.power = c.read("power");
+        this.armor = c.readAll("armor");
+        this.currentWeight = c.readInt("currentWeight");
+        this.health = c.readInt("health");
+        this.items = c.readAll("items");
+        this.level = c.readInt("level");
+        this.magic = c.readInt("magic");
+        this.maxWeight = c.readInt("maxWeight");
+        this.power = c.readInt("power");
         this.tile = c.read("tile");
         this.skills = c.read("skills");
     }
