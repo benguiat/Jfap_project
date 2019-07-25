@@ -75,13 +75,13 @@ public class DoorTile extends WallTile implements Storable, Observable<DoorTile>
     // c.write("x", this.x);
     // c.write("y", this.y);
     if (this.locked == true) {
-        c.write("locked", 1);;
+        c.write("locked", 1);
     }
     else {
         c.write("locked", 0);
     }
     if (this.open == true) {
-        c.write("open", 1);;
+        c.write("open", 1);
     }
     else {
         c.write("open", 0);
@@ -92,6 +92,21 @@ public class DoorTile extends WallTile implements Storable, Observable<DoorTile>
   @Override
   public void unmarshal(MarshallingContext c) {
     // TODO please implement me!
+      c.read("destructible");
+      c.read("hallway");
+      c.read("keyID");
+      c.read("trait");
+      if(this.locked == true){
+          c.read("locked",  1);
+      } else {
+          c.read("locked", 0);
+      }
+      if(this.open == true){
+          c.read("open", 1);
+      }
+      else {
+          c.write("open", 0);
+      }
   }
 
 public Hallway getHallway(){
