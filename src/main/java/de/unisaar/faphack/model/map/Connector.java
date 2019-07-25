@@ -8,26 +8,27 @@ import de.unisaar.faphack.model.Storable;
  *
  */
 public abstract class Connector<T extends Tile> implements Storable {
-  protected T fromTile;
-  protected T toTile;
 
-  public T from() {
-    return fromTile;
-  }
+    protected T fromTile;
+    protected T toTile;
 
-  public T to() {
-    return toTile;
-  }
+    public T from() {
 
-  public void marshal(MarshallingContext c) {
-    // TODO please implement me!
-    c.write("fromTile", this.fromTile);
-    c.write("toTile", this.toTile);
-  }
+        return fromTile;
+    }
 
-  public void unmarshal(MarshallingContext c) {
-    // TODO please implement me!
-    c.read("fromTile");
-    c.read("toTile");
-  }
+    public T to() {
+        return toTile;
+    }
+
+    public void marshal(MarshallingContext c) {
+        c.write("fromTile", this.fromTile);
+        c.write("toTile", this.toTile);
+    }
+
+    public void unmarshal(MarshallingContext c) {
+        // do Tiles need to be read with readBoard??????
+        c.read("fromTile");
+        c.read("toTile");
+    }
 }

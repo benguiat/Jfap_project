@@ -36,6 +36,8 @@ public class StairTile extends Tile {
     boolean oneWay = stair.onlyDown();
     Tile toTile = stair.to();
     Tile fromTile = stair.from();
+    System.out.println(fromTile);
+    System.out.println(toTile);
     if (oneWay == true && this == toTile) {
         return null;
     } 

@@ -11,122 +11,107 @@ import java.util.List;
  *
  */
 public class DoorTile extends WallTile implements Storable, Observable<DoorTile> {
-  private boolean open = false;
 
-  private boolean locked = false;
+    private boolean open = false;
 
-  private Hallway hallway;
+    private boolean locked = false;
 
-  private List<Observer<DoorTile>> observers;
+    private Hallway hallway;
 
-  /**
-   * To be opened by an item (key) the Effect of that item needs to create a m
-   * atching ID.
-   */
-  private int keyId;
+    private List<Observer<DoorTile>> observers;
 
-  public DoorTile() {
-  }
+    /**
+     * To be opened by an item (key) the Effect of that item needs to create a m
+     * atching ID.
+     */
+    private int keyId;
 
-  public DoorTile(int x, int y, Room room){
-    super(x, y, room);
-  }
-
-  @Override
-  public Tile willTake(Character c) {
-    //need to check to see if character is strong enough to open the door
-    //if the door is locked
-    if (this.open || c.getPower() > this.destructible) {
-        Hallway hw = this.getHallway();
-        Tile t1 = hw.to();
-        Tile t2 = hw.from();
-        if (this == t1) {
-            return t2;
-        }
-        else {
-            return t1;
-        }
+    public DoorTile() {
     }
-    else {
-        return null;
+
+    public DoorTile(int x, int y, Room room) {
+        super(x, y, room);
     }
-    //if the door is open
-  }
+
+    @Override
+    public Tile willTake(Character c) {
+        //need to check to see if character is strong enough to open the door
+        //if the door is locked
+        if (this.open || c.getPower() > this.destructible) {
+            Hallway hw = this.getHallway();
+            Tile t1 = hw.to();
+            Tile t2 = hw.from();
+            if (this == t1) {
+                return t2;
+            } else {
+                return t1;
+            }
+        } else {
+            return null;
+        }
+        //if the door is open
+    }
 
     //  }
     //  else {
     // return null;
-
     //}
-
-
     // TODO please implement me!
     // return null;
+    @Override
+    public void marshal(MarshallingContext c) {
+        // TODO please implement me
+        super.marshal(c);
+        c.write("destructible", this.destructible);
+        c.write("hallway", this.hallway);
+        c.write("keyId", this.keyId);
+        c.write("trait", this.trait);
+        // c.write("x", this.x);
+        // c.write("y", this.y);
+        if (this.locked == true) {
+            c.write("locked", 1);
+        } else {
+            c.write("locked", 0);
+        }
+        if (this.open == true) {
+            c.write("open", 1);
+        } else {
+            c.write("open", 0);
+        }
 
-
-  @Override
-  public void marshal(MarshallingContext c) {
-    // TODO please implement me
-    super.marshal(c);
-    c.write("destructible", this.destructible);
-    c.write("hallway", this.hallway);
-    c.write("keyId", this.keyId);
-    c.write("trait", this.trait);
-    // c.write("x", this.x);
-    // c.write("y", this.y);
-    if (this.locked == true) {
-        c.write("locked", 1);
-    }
-    else {
-        c.write("locked", 0);
-    }
-    if (this.open == true) {
-        c.write("open", 1);
-    }
-    else {
-        c.write("open", 0);
     }
 
-  }
+    @Override
+    public void unmarshal(MarshallingContext c) {
+        // TODO please implement me!
+        c.read("destructible");
+        c.read("hallway");
+        c.read("keyID");
+        c.read("trait");
+        locked = c.readInt("locked") == 1;
+        open = c.readInt("open") == 1;
 
-  @Override
-  public void unmarshal(MarshallingContext c) {
-    // TODO please implement me!
-      c.read("destructible");
-      c.read("hallway");
-      c.read("keyID");
-      c.read("trait");
-      if(this.locked == true){
-          c.read("locked",  1);
-      } else {
-          c.read("locked", 0);
-      }
-      if(this.open == true){
-          c.read("open", 1);
-      }
-      else {
-          c.write("open", 0);
-      }
-  }
+    }
 
-public Hallway getHallway(){
-    return hallway;
-  }
+    public Hallway getHallway() {
+        return hallway;
+    }
 
-  @Override
-  public String getTrait() { return open ? OPENDOOR : DOOR; }
+    @Override
+    public String getTrait() {
+        return open ? OPENDOOR : DOOR;
+    }
 
-  @Override
-  public void register(Observer<DoorTile> observer) {
-    // lazy initialization
-    // TODO please implement me!
+    @Override
+    public void register(Observer<DoorTile> observer) {
+        // lazy initialization
+        // TODO please implement me!
 
-  }
+    }
 
-  @Override
-  public void notifyObservers(DoorTile object) {
-    // TODO please implement me!
-  }
-
+    @Override
+    public void notifyObservers(DoorTile object) {
+        // TODO please implement me!
+    }
 
 }
