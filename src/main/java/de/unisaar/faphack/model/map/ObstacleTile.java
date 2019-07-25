@@ -15,6 +15,8 @@ public class ObstacleTile extends WallTile {
   @Override
   public void marshal(MarshallingContext c) {
     // TODO please implement me!
+    super.marshal(c);
+    c.write("trait", this.trait);
   }
 
   @Override
