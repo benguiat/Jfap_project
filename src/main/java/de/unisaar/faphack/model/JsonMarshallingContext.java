@@ -31,7 +31,7 @@ public class JsonMarshallingContext implements MarshallingContext {
     stack = new ArrayDeque<>();
     factory = fact;
     writecache = new IdentityHashMap<Storable, String>();
-    readcache = new IdentityHashMap<String, Storable>();
+    readcache = new HashMap<String, Storable>();
  
   }
   
@@ -49,11 +49,11 @@ public class JsonMarshallingContext implements MarshallingContext {
       
       String idName = getIdClassName(s);
       
+      //CHECK IF IN WRITECACHE
       this.writecache.put(s, idName);
       obj.put("id", idName);
-      
+
       stack.push(obj);
-      //WRITE MARSHALL IN EACH CLASS
       s.marshal(this);
       stack.pop();
       
@@ -65,8 +65,16 @@ public class JsonMarshallingContext implements MarshallingContext {
   @Override
   public void save(Storable s) {
 
+   JSONObject obj = new JSONObject();
    
-  System.out.println(toJson(s));
+    obj = toJson(s);
+    
+    
+    try (FileWriter writer = new FileWriter(this.file)) {
+			writer.write(obj.toJSONString());
+		} catch (IOException ex) {
+          Logger.getLogger(JsonMarshallingContext.class.getName()).log(Level.SEVERE, null, ex);
+      }
     
   }
 
@@ -82,17 +90,17 @@ public class JsonMarshallingContext implements MarshallingContext {
   public void write(String key, Storable object) {
     
        if (stack.size() > 0){
+           
           JSONObject obj = stack.pop();
-          
+
           JSONObject obj2 = new JSONObject();
-          
+  
           obj2 = toJson(object);
-          
-          obj2 = stack.pop();
-          
+      
           obj.put(key, obj2);
-          
+
           stack.push(obj);
+
       } 
       
       else {  
