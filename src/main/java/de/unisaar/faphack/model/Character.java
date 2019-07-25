@@ -358,12 +358,15 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
         // TODO please implement me!
         this.name = c.readString("name");
         this.role = c.readString("role");
-        this.activeEffects = c.readAll("activeEffects");
+        Set<CharacterModifier> activeEff = new HashSet<>();
+        this.activeEffects = c.readAll("activeEffects", activeEff);
         this.activeWeapon = c.read("activeWeapon");
-        this.armor = c.readAll("armor");
+        List<Armor> arm = new ArrayList<>();
+        this.armor = c.readAll("armor", arm);
         this.currentWeight = c.readInt("currentWeight");
         this.health = c.readInt("health");
-        this.items = c.readAll("items");
+        List<Wearable> it = new ArrayList<>();
+        this.items = c.readAll("items",it);
         this.level = c.readInt("level");
         this.magic = c.readInt("magic");
         this.maxWeight = c.readInt("maxWeight");
