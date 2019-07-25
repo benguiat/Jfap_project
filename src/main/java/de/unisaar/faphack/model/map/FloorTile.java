@@ -65,6 +65,9 @@ public class FloorTile extends Tile {
   @Override
   public void marshal(MarshallingContext c) {
     // TODO please implement me!
+    super.marshal(c);
+    c.write("items", this.items);
+    c.write("trait", this.trait);
   }
 
   @Override

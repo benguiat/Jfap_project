@@ -72,8 +72,8 @@ public class DoorTile extends WallTile implements Storable, Observable<DoorTile>
     c.write("hallway", this.hallway);
     c.write("keyId", this.keyId);
     c.write("trait", this.trait);
-    c.write("x", this.x);
-    c.write("y", this.y);
+    // c.write("x", this.x);
+    // c.write("y", this.y);
     if (this.locked == true) {
         c.write("locked", 1);;
     }
