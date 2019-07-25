@@ -18,12 +18,12 @@ public class ObstacleTile extends WallTile {
     public void marshal(MarshallingContext c) {
 
         super.marshal(c);
-        c.write("trait", this.trait);
+        
     }
 
     @Override
     public void unmarshal(MarshallingContext c) {
 
-        c.read("trait");
+       super.unmarshal(c);
     }
 }

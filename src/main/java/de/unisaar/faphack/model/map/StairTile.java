@@ -64,7 +64,6 @@ public class StairTile extends Tile {
         super.marshal(c);
         c.write("stair", this.stair);
         c.write("trap", this.trap);
-        c.write("trait", this.trait);
 
     }
 
@@ -73,7 +72,6 @@ public class StairTile extends Tile {
         super.unmarshal(c);
         stair = c.read("stair");
         trap = c.read("trap");
-        trait = c.readString("trait");
 
     }
 

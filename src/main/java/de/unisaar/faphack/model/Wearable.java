@@ -48,9 +48,9 @@ public class Wearable extends Item {
     @Override
     public void unmarshal(MarshallingContext c) {
         super.unmarshal(c);
-        weight = c.readInt("weight");
-        character = c.read("character");
-        isWeapon = (c.readInt("isWeapon")==1);
+        this.weight = c.readInt("weight");
+        this.character = c.read("character");
+        this.isWeapon = (c.readInt("isWeapon")==1);
     }
 
     public void pickUp(Character c) {
