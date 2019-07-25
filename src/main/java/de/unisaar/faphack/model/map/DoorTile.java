@@ -66,7 +66,27 @@ public class DoorTile extends WallTile implements Storable, Observable<DoorTile>
 
   @Override
   public void marshal(MarshallingContext c) {
-    // TODO please implement me!
+    // TODO please implement me
+    super.marshal(c);
+    c.write("destructible", this.destructible);
+    c.write("hallway", this.hallway);
+    c.write("keyId", this.keyId);
+    c.write("trait", this.trait);
+    c.write("x", this.x);
+    c.write("y", this.y);
+    if (this.locked == true) {
+        c.write("locked", 1);;
+    }
+    else {
+        c.write("locked", 0);
+    }
+    if (this.open == true) {
+        c.write("open", 1);;
+    }
+    else {
+        c.write("open", 0);
+    }
+
   }
 
   @Override
