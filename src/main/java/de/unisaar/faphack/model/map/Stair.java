@@ -27,6 +27,9 @@ public class Stair extends Connector<StairTile> {
     public void marshal(MarshallingContext c) {
         super.marshal(c);
 
+        c.write("fromTile", this.fromTile);
+        c.write("toTile", this.toTile);
+
         if (this.oneWay) {
             c.write("oneWay", 1);
         } else {
@@ -37,6 +40,9 @@ public class Stair extends Connector<StairTile> {
     @Override
     public void unmarshal(MarshallingContext c) {
         super.unmarshal(c);
+
+        fromTile = c.read("fromTile");
+        toTile = c.read("toTile");
 
         int intOneWay = 1;
         oneWay = c.read("oneWay").equals(intOneWay);
