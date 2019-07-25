@@ -12,24 +12,25 @@ import java.util.List;
  *
  */
 public class World implements Storable {
-  public Game g;
 
-  private List<Room> mapElements;
+    public Game g;
 
-  public World() {}
+    private List<Room> mapElements;
 
-  @Override
-  public void marshal(MarshallingContext c) {
-    // TODO please implement me!
-    c.write("mapElements", this.mapElements);
-  }
+    public World() {
+    }
 
-  @Override
-  public void unmarshal(MarshallingContext c) {
-    // TODO please implement me!
-  }
+    @Override
+    public void marshal(MarshallingContext c) {
+        c.write("mapElements", this.mapElements);
+    }
 
-  public List<Room> getMapElements(){
-    return mapElements;
-  }
+    @Override
+    public void unmarshal(MarshallingContext c) {
+        mapElements = c.read("mapElements");
+    }
+
+    public List<Room> getMapElements() {
+        return mapElements;
+    }
 }
