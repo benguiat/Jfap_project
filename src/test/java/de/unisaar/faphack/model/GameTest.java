@@ -44,13 +44,12 @@ class GameTest {
   @Test
   void move() {
     Game game = TestUtils.createGame();
-    Room room = game.getWorld().getMapElements().get(0);
+    Room room = game.getWorld().getMapElements().get(2);
     Character testObject = room.getInhabitants().get(0);
-    System.out.println(testObject.name);
-    assertTrue(game.move(testObject, new Direction(-1, 0)));
-    assertTrue(game.move(testObject, new Direction(0, -1)));
     assertTrue(game.move(testObject, new Direction(1, 0)));
-    assertFalse(game.move(testObject, new Direction(1, -1)));
+    assertTrue(game.move(testObject, new Direction(0, -1)));
+    assertTrue(game.move(testObject, new Direction(-1, 0)));
+    assertFalse(game.move(testObject, new Direction(-1, 0)));
   }
 
   /**
@@ -122,8 +121,6 @@ class GameTest {
     // Equip an armor
     Armor armor = createArmor(1,1,1);
     character.items.add(armor);
-    assertTrue(character.equipItem(armor));
-
     // the armor should be in the character's armor list
     assertTrue(game.equip(character, armor));
 
