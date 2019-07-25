@@ -49,12 +49,12 @@ public class Wearable extends Item {
     public void unmarshal(MarshallingContext c) {
         super.unmarshal(c);
         weight = c.readInt("weight");
-        //trait = c.readString("trait");
+        character = c.read("character");
         isWeapon = (c.readInt("isWeapon")==1);
     }
 
     public void pickUp(Character c) {
-        // TODO please implement me!
+  
         this.character = c;
         this.onTile = null;
     }

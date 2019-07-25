@@ -31,6 +31,7 @@ public class World implements Storable {
         List<Room> mapE = new ArrayList<>(); // this might be crap
         
         c.readAll("mapElements", mapE);
+        this.g = c.read("game");
         mapElements = mapE;
     }
 

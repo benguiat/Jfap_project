@@ -130,5 +130,6 @@ public class Room implements Storable {
         this.inhabitants = inh;
         // read tiles        
         this.tiles = c.readBoard("tiles");
+        this.w = c.read("world");
     }
 }

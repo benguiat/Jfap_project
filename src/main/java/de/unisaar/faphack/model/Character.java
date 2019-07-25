@@ -364,7 +364,6 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
 
     @Override
     public void unmarshal(MarshallingContext c) {
-        // TODO please implement me!
         this.name = c.readString("name");
         this.role = c.readString("role");
         Set<CharacterModifier> activeEff = new HashSet<>();

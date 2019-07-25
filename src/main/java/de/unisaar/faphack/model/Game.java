@@ -169,7 +169,6 @@ public class Game implements Storable {
 
   @Override
   public void unmarshal(MarshallingContext c) {
-    // TODO please implement me!
     world = c.read("world");
     protagonist = c.read("protagonist");
   }

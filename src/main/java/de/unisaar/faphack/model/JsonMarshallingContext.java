@@ -71,7 +71,7 @@ public class JsonMarshallingContext implements MarshallingContext {
 
     private Storable fromJson(JSONObject object) {
 
-        Storable s = null;
+        Storable s;
 
         if (object != null) {
 
@@ -83,16 +83,28 @@ public class JsonMarshallingContext implements MarshallingContext {
                 s = this.readcache.get(id);
             } else {
                 stack.push(object);
+                
                 String className = id.split("@")[0];
+             
                 s = factory.newInstance(className);
+                
+                System.out.println("Class! " + className);
+                
                 this.readcache.put(id, s);
                 
                 s.unmarshal(this);
                 
+                
+                
                 stack.pop();
+                
+                return s;
 
             }
 
+        }
+        else{
+            return null;
         }
 
         return s;
@@ -123,10 +135,10 @@ public class JsonMarshallingContext implements MarshallingContext {
         try (FileReader reader = new FileReader(this.file);) {
             Object readFile = parser.parse(reader);
             JSONObject obj = (JSONObject) readFile;
-            System.out.println("File " + this.file);
-            System.out.println("NoJSON " + obj);
+            System.out.println("File: " + this.file);
+            
             s = fromJson(obj);
-            System.out.println("WithJSON " + s);
+            
         } catch (IOException | ParseException ex) {
             Logger.getLogger(JsonMarshallingContext.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -164,9 +176,12 @@ public class JsonMarshallingContext implements MarshallingContext {
             JSONObject obj = this.stack.pop();
 
             Object object = obj.get(key);
+            
             JSONObject getObject = (JSONObject) object;
+            System.out.println("obj1 " + getObject);
             output = (T) fromJson(getObject);
-
+            System.out.println("obj2 " + output);
+            
             this.stack.push(obj);
 
         }
@@ -286,16 +301,19 @@ public class JsonMarshallingContext implements MarshallingContext {
         }
     }
 
-    private <E extends Storable> void addItems(Collection<E> coll, JSONArray arr) {
-
-        for (Object item : arr) {
-            JSONObject obj = (JSONObject) item;
-            Storable s = fromJson(obj);
-
-            coll.add((E) s);
-        }
-
+    private <T extends Storable> T item2Storable(Object item){
+      JSONObject obj = (JSONObject) item;
+      JSONObject bigObject = new JSONObject();
+      bigObject.put("item", obj);
+      stack.push(bigObject);
+      System.out.println("no! " + bigObject);
+      T storable = (T) read("item");
+      
+      stack.pop();
+      
+      return storable;
     }
+  
 
     @Override
     public void readAll(String key, Collection<? extends Storable> coll) {
@@ -304,11 +322,14 @@ public class JsonMarshallingContext implements MarshallingContext {
 
             JSONObject obj = this.stack.pop();
             Object object = obj.get(key);
-            JSONArray arr = (JSONArray) object;
+            Collection<JSONObject> objectCollection = (Collection<JSONObject>) object;
 
-            if (coll != null) {
-                addItems(coll, arr);
+            for (Object item : objectCollection) {
+                System.out.println("hi! " + item);
+
+                coll.add(item2Storable(item));
             }
+
             System.out.println("Collection " + coll);
             this.stack.push(obj);
 
