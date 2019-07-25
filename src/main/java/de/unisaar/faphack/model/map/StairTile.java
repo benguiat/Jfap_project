@@ -41,9 +41,11 @@ public class StairTile extends Tile {
     } 
     else {
         if (this == toTile) {
+            c.levelDown();
             return fromTile;
         }
         else {
+            c.levelUp();
             return toTile;
         }
     }

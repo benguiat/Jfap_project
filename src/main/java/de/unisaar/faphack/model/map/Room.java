@@ -99,6 +99,8 @@ public class Room implements Storable {
   }
 
   public Tile[][] getTiles() {
+      System.out.println(tiles[0]);
+      System.out.println(tiles[1]);
     return tiles;
   }
 
@@ -110,11 +112,12 @@ public class Room implements Storable {
   public void marshal(MarshallingContext c) {
     c.write("inhabitants", this.inhabitants);
     c.write("tiles", this.tiles);
-    // TODO please implement me!
+    
   }
 
   @Override
   public void unmarshal(MarshallingContext c) {
-    // TODO please implement me!
+    inhabitants = c.read("inhabitants");
+//    tiles = c.read("tiles");
   }
 }
