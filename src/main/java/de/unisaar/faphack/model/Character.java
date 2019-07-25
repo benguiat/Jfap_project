@@ -337,6 +337,20 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
     @Override
     public void marshal(MarshallingContext c) {
         // TODO please implement me!
+        c.write("name", this.name);
+        c.write("role", this.role);
+        c.write("activeEffects", this.activeEffects);
+        c.write("activeWeapon", this.activeWeapon);
+        c.write("armor",this.armor);
+        c.write("currentWeight", this.currentWeight);
+        c.write("health", this.health);
+        c.write("items", this.items);
+        c.write("level", this.level);
+        c.write("magic", this.magic);
+        c.write("maxWeight", this.maxWeight);
+        c.write("power", this.power);
+        c.write("tile", this.tile);
+        c.write("skills", this.skills);
     }
 
     @Override
