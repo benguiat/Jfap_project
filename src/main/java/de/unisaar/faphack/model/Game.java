@@ -2,6 +2,7 @@ package de.unisaar.faphack.model;
 
 import de.unisaar.faphack.model.effects.MoveEffect;
 import de.unisaar.faphack.model.map.Tile;
+import de.unisaar.faphack.model.map.WallTile;
 import de.unisaar.faphack.model.map.World;
 
 import java.util.List;
@@ -35,7 +36,20 @@ public class Game implements Storable {
     // TODO please implement me!
     if (whom.power > 0) {
     if (Math.abs(direction.x) + Math.abs(direction.y) <= 1) {
-        return true;
+        Tile dest = whom.tile.getNextTile(direction);
+        if (dest instanceof WallTile) {
+            if (dest == dest.willTake(whom)) {
+                whom.move(dest);
+                return true;
+            } 
+            else {
+                return false;
+            }
+        }
+        else {
+            whom.move(dest);
+                return true;
+        }
     }
     else {
         return false;
