@@ -107,7 +107,7 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
     public void move(Tile destination) {
         tile = destination;
     }
-
+    
     /**
      * Pick up the given Wearable. Returns true if the action is possible. The
      * character can only pickup an item if it is 1. on the same tile 2. the
@@ -359,14 +359,17 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
         this.name = c.readString("name");
         this.role = c.readString("role");
         Set<CharacterModifier> activeEff = new HashSet<>();
-        this.activeEffects = c.readAll("activeEffects", activeEff);
+        c.readAll("activeEffects", activeEff);
+        this.activeEffects = activeEff;
         this.activeWeapon = c.read("activeWeapon");
         List<Armor> arm = new ArrayList<>();
-        this.armor = c.readAll("armor", arm);
+        c.readAll("armor", arm);
+        this.armor = arm;
         this.currentWeight = c.readInt("currentWeight");
-        this.health = c.readInt("health");
+        this.health = c.readInt("healsth");
         List<Wearable> it = new ArrayList<>();
-        this.items = c.readAll("items",it);
+        c.readAll("items",it);
+        this.items = it;
         this.level = c.readInt("level");
         this.magic = c.readInt("magic");
         this.maxWeight = c.readInt("maxWeight");

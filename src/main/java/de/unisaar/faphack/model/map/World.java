@@ -30,7 +30,8 @@ public class World implements Storable {
     public void unmarshal(MarshallingContext c) {
         List<Room> mapE = new ArrayList<>(); // this might be crap
         
-        mapElements = c.readAll("mapElements", mapE);
+        c.readAll("mapElements", mapE);
+        mapElements = mapE;
     }
 
     public List<Room> getMapElements() {

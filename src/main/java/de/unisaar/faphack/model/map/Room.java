@@ -126,8 +126,8 @@ public class Room implements Storable {
         // initialize first inhabitants
         List<Character> inh = new ArrayList<>();
         // readAll the collection
-        inhabitants = c.readAll("inhabitants", inh);
-        
+        c.readAll("inhabitants", inh);
+        inhabitants = inh;
         // read tiles        
         tiles = c.readBoard("tiles");
     }
