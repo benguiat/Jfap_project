@@ -31,6 +31,7 @@ implements Storable, TraitedTileOccupier {
   public void marshal(MarshallingContext c) {
     c.write("effect", this.effect);
     c.write("onTile", this.onTile);
+    c.write("trait", this.trait);
   }
 
   public void unmarshal(MarshallingContext c) {

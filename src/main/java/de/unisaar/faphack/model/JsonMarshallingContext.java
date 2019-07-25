@@ -71,7 +71,7 @@ public class JsonMarshallingContext implements MarshallingContext {
 
     private Storable fromJson(JSONObject object) {
 
-        Storable s;
+        Storable s = null;
 
         if (object != null) {
             
@@ -90,11 +90,8 @@ public class JsonMarshallingContext implements MarshallingContext {
                 this.readcache.put(id, s);
                 
                 s.unmarshal(this);
-
-                
+              
                 stack.pop();
-                
-             
                 
                 return s;
             }
@@ -133,6 +130,7 @@ public class JsonMarshallingContext implements MarshallingContext {
             System.out.println("File: " + this.file);
             
             s = fromJson(obj);
+
             
         } catch (IOException | ParseException ex) {
             Logger.getLogger(JsonMarshallingContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -145,9 +143,6 @@ public class JsonMarshallingContext implements MarshallingContext {
     @Override
     public void write(String key, Storable object) {
 
-        if (object == null) {
-
-        } else {
 
             if (this.stack.size() > 0) {
 
@@ -157,7 +152,7 @@ public class JsonMarshallingContext implements MarshallingContext {
                 obj.put(key, obj2);
                 this.stack.push(obj);
 
-            }
+            
         }
     }
 
@@ -207,6 +202,7 @@ public class JsonMarshallingContext implements MarshallingContext {
             JSONObject obj = this.stack.pop();
             Object object = obj.get(key);
             output = ((Long)object).intValue();
+            
 
             this.stack.push(obj);
 
@@ -234,6 +230,7 @@ public class JsonMarshallingContext implements MarshallingContext {
             JSONObject obj = this.stack.pop();
             Object object = obj.get(key);
             output = (double) object;
+            
 
             this.stack.push(obj);
 
@@ -245,24 +242,25 @@ public class JsonMarshallingContext implements MarshallingContext {
     @Override
     public void write(String key, String object) {
 
-        if (object != null) {
+        
             if (this.stack.size() > 0) {
                 JSONObject obj = this.stack.pop();
                 obj.put(key, object);
                 this.stack.push(obj);
             }
-        }
+        
 
     }
 
     @Override
     public String readString(String key) {
-        String output = "";
+        String output = null;
         if (this.stack.size() > 0) {
 
             JSONObject obj = this.stack.pop();
             Object object = obj.get(key);
             output = (String) object;
+            
 
             this.stack.push(obj);
 
@@ -325,8 +323,7 @@ public class JsonMarshallingContext implements MarshallingContext {
 
                 coll.add(item2Storable(item));
             }
-
-        
+            
             this.stack.push(obj);
 
         }
