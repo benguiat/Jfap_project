@@ -52,10 +52,10 @@ public class CharacterModifier implements Storable {
     @Override
     public void unmarshal(MarshallingContext c) {
 
-        health = c.read("health");
-        magic = c.read("magic");
-        power = c.read("power");
-        howLong = c.read("howLong");
+        health = c.readInt("health");
+        magic = c.readInt("magic");
+        power = c.readInt("power");
+        howLong = c.readInt("howLong");
 
     }
 }
