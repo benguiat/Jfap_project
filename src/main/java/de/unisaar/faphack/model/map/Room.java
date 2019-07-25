@@ -127,8 +127,8 @@ public class Room implements Storable {
         List<Character> inh = new ArrayList<>();
         // readAll the collection
         c.readAll("inhabitants", inh);
-        inhabitants = inh;
+        this.inhabitants = inh;
         // read tiles        
-        tiles = c.readBoard("tiles");
+        this.tiles = c.readBoard("tiles");
     }
 }

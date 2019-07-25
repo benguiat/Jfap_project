@@ -45,7 +45,6 @@ public class JsonMarshallingContext implements MarshallingContext {
 
     private JSONObject toJson(Storable s) {
 
-        //System.out.println("toJson " + s);
         JSONObject obj = new JSONObject();
 
         if (s == null) {
@@ -64,7 +63,6 @@ public class JsonMarshallingContext implements MarshallingContext {
 
             this.stack.push(obj);
             s.marshal(this);
-            //System.out.println("toJson" + stack);
             obj = this.stack.pop();
 
             return obj;
@@ -78,6 +76,8 @@ public class JsonMarshallingContext implements MarshallingContext {
         if (object != null) {
 
             String id = (String) object.get("id");
+            
+            System.out.println("id " + id);
 
             if (this.readcache.get(id) != null) {
                 s = this.readcache.get(id);
@@ -86,13 +86,13 @@ public class JsonMarshallingContext implements MarshallingContext {
                 String className = id.split("@")[0];
                 s = factory.newInstance(className);
                 this.readcache.put(id, s);
-
+                
                 s.unmarshal(this);
+                
                 stack.pop();
 
             }
 
-        } else {
         }
 
         return s;
@@ -103,8 +103,6 @@ public class JsonMarshallingContext implements MarshallingContext {
     public void save(Storable s) {
 
         JSONObject obj = toJson(s);
-
-        System.out.println("save " + obj);
 
         try (FileWriter writer = new FileWriter(this.file)) {
             writer.write(obj.toJSONString());
@@ -125,11 +123,13 @@ public class JsonMarshallingContext implements MarshallingContext {
         try (FileReader reader = new FileReader(this.file);) {
             Object readFile = parser.parse(reader);
             JSONObject obj = (JSONObject) readFile;
+            System.out.println("File " + this.file);
+            System.out.println("NoJSON " + obj);
             s = fromJson(obj);
+            System.out.println("WithJSON " + s);
         } catch (IOException | ParseException ex) {
             Logger.getLogger(JsonMarshallingContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
 
         return s;
 
@@ -150,32 +150,29 @@ public class JsonMarshallingContext implements MarshallingContext {
                 obj.put(key, obj2);
                 this.stack.push(obj);
 
-            } else {
             }
         }
     }
 
     @Override
     public <T extends Storable> T read(String key) {
-         
+
         T output = null;
-        
-            if (this.stack.size() > 0) {
 
-                JSONObject obj = this.stack.pop();
+        if (this.stack.size() > 0) {
 
-                Object object = obj.get(key);
-                JSONObject getObject = (JSONObject) object;
-                output = (T) fromJson(getObject);
-                
-                this.stack.push(obj);
+            JSONObject obj = this.stack.pop();
 
-            } else {
-            }
-        
-            
+            Object object = obj.get(key);
+            JSONObject getObject = (JSONObject) object;
+            output = (T) fromJson(getObject);
+
+            this.stack.push(obj);
+
+        }
+
         return output;
-        
+
     }
 
     @Override
@@ -187,27 +184,24 @@ public class JsonMarshallingContext implements MarshallingContext {
             obj.put(key, object);
             this.stack.push(obj);
 
-        } else {
         }
 
     }
 
     @Override
     public int readInt(String key) {
-        
+
         int output = 0;
-            if (this.stack.size() > 0) {
+        if (this.stack.size() > 0) {
 
-                JSONObject obj = this.stack.pop();
-                Object object = obj.get(key);
-                output = (int) object;
-                
-                this.stack.push(obj);
+            JSONObject obj = this.stack.pop();
+            Object object = obj.get(key);
+            output = (int) object;
 
-            } else {
-            }
-        
-            
+            this.stack.push(obj);
+
+        }
+
         return output;
     }
 
@@ -218,29 +212,25 @@ public class JsonMarshallingContext implements MarshallingContext {
             JSONObject obj = this.stack.pop();
             obj.put(key, object);
             this.stack.push(obj);
-        } else {
         }
 
     }
 
     @Override
     public double readDouble(String key) {
-            double output = 0;
-            if (this.stack.size() > 0) {
+        double output = 0;
+        if (this.stack.size() > 0) {
 
-                JSONObject obj = this.stack.pop();
-                Object object = obj.get(key);
-                output = (double) object;
-                
-                this.stack.push(obj);
+            JSONObject obj = this.stack.pop();
+            Object object = obj.get(key);
+            output = (double) object;
 
-            } else {
-            }
-        
-            
+            this.stack.push(obj);
+
+        }
+
         return output;
     }
-    
 
     @Override
     public void write(String key, String object) {
@@ -250,32 +240,26 @@ public class JsonMarshallingContext implements MarshallingContext {
                 JSONObject obj = this.stack.pop();
                 obj.put(key, object);
                 this.stack.push(obj);
-            } else {
             }
-        } else {
-
         }
 
     }
 
     @Override
     public String readString(String key) {
-            String output = "";
-            if (this.stack.size() > 0) {
+        String output = "";
+        if (this.stack.size() > 0) {
 
-                JSONObject obj = this.stack.pop();
-                Object object = obj.get(key);
-                output = (String) object;
-                
-                this.stack.push(obj);
+            JSONObject obj = this.stack.pop();
+            Object object = obj.get(key);
+            output = (String) object;
 
-            } else {
-            }
-        
-            
+            this.stack.push(obj);
+
+        }
+
         return output;
     }
-    
 
     @Override
     public void write(String key, Collection<? extends Storable> coll) {
@@ -298,42 +282,37 @@ public class JsonMarshallingContext implements MarshallingContext {
 
                 obj.put(key, arr);
                 this.stack.push(obj);
-            } else {
             }
         }
     }
-    
+
     private <E extends Storable> void addItems(Collection<E> coll, JSONArray arr) {
-        
-        for (Object item : arr){
-                        JSONObject obj = (JSONObject) item;
-                        Storable s = fromJson(obj);
-                        
-                        coll.add((E) s);
-                    }
-    
-}
+
+        for (Object item : arr) {
+            JSONObject obj = (JSONObject) item;
+            Storable s = fromJson(obj);
+
+            coll.add((E) s);
+        }
+
+    }
 
     @Override
     public void readAll(String key, Collection<? extends Storable> coll) {
-   
-            if (this.stack.size() > 0) {
 
-                JSONObject obj = this.stack.pop();
-                Object object = obj.get(key);
-                JSONArray arr = (JSONArray) object;
-                
-                if (coll != null){
-                    addItems(coll, arr);
-                }
-                else{
-                    
-                }
-               
-                this.stack.push(obj);
+        if (this.stack.size() > 0) {
 
-            } else {
+            JSONObject obj = this.stack.pop();
+            Object object = obj.get(key);
+            JSONArray arr = (JSONArray) object;
+
+            if (coll != null) {
+                addItems(coll, arr);
             }
+            System.out.println("Collection " + coll);
+            this.stack.push(obj);
+
+        }
 
     }
 
@@ -360,27 +339,45 @@ public class JsonMarshallingContext implements MarshallingContext {
 
                 obj.put(key, arr);
                 this.stack.push(obj);
-            } else {
             }
         }
     }
 
     @Override
     public Tile[][] readBoard(String key) {
+        Tile[][] tileBoard = null;
+
         if (this.stack.size() > 0) {
-            
+
             JSONObject obj = this.stack.pop();
             Object object = obj.get(key);
-              
+
             JSONArray arr = (JSONArray) object;
-               
+
+            Collection<Tile[]> tiles = new ArrayList<>();
+
+            for (Object tile : arr) {
+
+                Collection<Tile> tileIndividual = new ArrayList<>();
+                JSONArray arr2 = (JSONArray) arr;
+                for (Object item : arr2) {
+                    JSONObject t = (JSONObject) item;
+                    Storable s = fromJson(t);
+
+                    tileIndividual.add((Tile) s);
+                    Tile[] tileOne = tileIndividual.toArray(new Tile[0]);
+                    tiles.add(tileOne);
+
+                }
+                tileBoard = tiles.toArray(new Tile[0][0]);
+
+            }
+
             this.stack.push(obj);
-            
+
         }
-        else {
-            
-        }
-        return null;
+
+        return tileBoard;
     }
 
 }
