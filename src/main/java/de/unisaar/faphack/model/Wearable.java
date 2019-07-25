@@ -10,45 +10,59 @@ import de.unisaar.faphack.model.map.Tile;
  *
  */
 public class Wearable extends Item {
-  /**
-   * The weight of the item.
-   */
-  protected int weight;
 
-  /**
-   *
-   */
-  protected boolean isWeapon;
+    /**
+     * The weight of the item.
+     */
+    protected int weight;
 
-  /**
-   * The character who carries this item. This is null if the Item is placed on a
-   * Tile.
-   */
-  protected Character character;
+    /**
+     *
+     */
+    protected boolean isWeapon;
 
-  public Wearable() {
+    /**
+     * The character who carries this item. This is null if the Item is placed
+     * on a Tile.
+     */
+    protected Character character;
 
-  }
+    public Wearable() {
 
-  @Override
-  public void marshal(MarshallingContext c) {
-    // TODO please implement me!
-  }
+    }
 
-  @Override
-  public void unmarshal(MarshallingContext c) {
-    // TODO please implement me!
-  }
+    @Override
+    public void marshal(MarshallingContext c) {
+        super.marshal(c);
+        c.write("weight", this.weight);
+        c.write("Character", this.character);
 
-  public void pickUp(Character c) {
-    // TODO please implement me!
-    this.character = c;
-    this.onTile = null;
-  }
+        if (this.isWeapon) {
+            c.write("isWeapon", 1);
+        } else {
+            c.write("isWeapon", 0);
+        }
+    }
 
-  public void drop(Tile t) {
-    // TODO please implement me!
-    this.onTile = t;
-    this.character = null;
-  }
+    @Override
+    public void unmarshal(MarshallingContext c) {
+        super.unmarshal(c);
+        weight = c.read("weight");
+        character = c.read("Character");
+
+        int exists = 1;
+        isWeapon = c.read("isWeapon").equals(exists);
+    }
+
+    public void pickUp(Character c) {
+        // TODO please implement me!
+        this.character = c;
+        this.onTile = null;
+    }
+
+    public void drop(Tile t) {
+        // TODO please implement me!
+        this.onTile = t;
+        this.character = null;
+    }
 }
