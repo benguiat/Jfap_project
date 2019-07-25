@@ -133,10 +133,7 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
         Tile ItemLoc = what.getTile();
 
         // calculate the weight that the char is currently carrying
-        Double sum = 0.0;
-        for (Wearable item : items) {
-            sum = Double.sum(sum, item.weight);
-        }
+        int sum = this.getWeight();
 
         if (this.maxWeight > sum && CharLoc == ItemLoc) {
             ItemLoc.onTile().remove(what);
@@ -203,8 +200,11 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
     }
 
     public int getWeight() {
-        // TODO: implement
-        return 0;
+        int sum = 0;
+        for (Wearable i : items) {
+            sum += i.weight;
+        }
+        return sum;
     }
 
     public int levelDown() {
