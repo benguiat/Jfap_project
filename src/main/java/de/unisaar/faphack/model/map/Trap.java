@@ -29,9 +29,12 @@ public class Trap extends Fixtures {
     public void marshal(MarshallingContext c) {
         super.marshal(c);
         c.write("trapdoor", this.trapDoor);
+        c.write("modifier", this.modifier);
     }
 
     public void unmarshal(MarshallingContext c) {
-        c.read("trapdoor");
+        super.unmarshal(c);
+        this.trapDoor = c.read("trapdoor");
+        this.modifier = c.read("modifier");
     }
 }

@@ -41,7 +41,6 @@ implements Effect<CharacterModifier, CharacterModifier>, Storable {
 
   @Override
   public void marshal(MarshallingContext c) {
-    // TODO: FILL THIS
     c.write("health", this.health);
     c.write("magic", this.magic);
     c.write("power", this.power);
@@ -49,9 +48,8 @@ implements Effect<CharacterModifier, CharacterModifier>, Storable {
 
   @Override
   public void unmarshal(MarshallingContext c) {
-    // TODO: FILL THIS
-    c.readInt("health");
-    c.readInt("magic");
-    c.readInt("power");
+    this.health = c.readDouble("health");
+    this.magic = c.readDouble("magic");
+    this.power = c.readDouble("power");
   }
 }

@@ -71,7 +71,12 @@ public class FloorTile extends Tile {
 
   @Override
   public void unmarshal(MarshallingContext c) {
-    c.read("items");
+    super.unmarshal(c);
+    
+    List<Item> it = new ArrayList<>();
+    c.readAll("items",it);
+    this.items = it;
+    
 
   }
 

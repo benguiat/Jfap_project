@@ -27,8 +27,7 @@ public abstract class Connector<T extends Tile> implements Storable {
     }
 
     public void unmarshal(MarshallingContext c) {
-        // do Tiles need to be read with readBoard??????
-        c.read("fromTile");
-        c.read("toTile");
+        this.fromTile = c.read("fromTile");
+        this.toTile = c.read("toTile");
     }
 }

@@ -90,8 +90,7 @@ public class JsonMarshallingContext implements MarshallingContext {
                 this.readcache.put(id, s);
                 
                 s.unmarshal(this);
-                
-                System.out.println(s);
+
                 
                 stack.pop();
                 
