@@ -156,6 +156,8 @@ public class Game implements Storable {
   @Override
   public void unmarshal(MarshallingContext c) {
     // TODO please implement me!
+    world = c.read("world");
+    protagonist = c.read("protagonist");
   }
 
   public World getWorld() {
@@ -165,11 +167,12 @@ public class Game implements Storable {
   /** Add the game's protagonist to a random floor tile in the first room */
   public void setProtagonist(Character prot) {
     // TODO: fill here
+    protagonist = prot;
   }
 
   /** get the game's protagonist */
   public Character getProtagonist(Character prot) {
     // TODO: fill here
-    return null;
+    return protagonist;
   }
 }
