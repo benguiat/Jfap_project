@@ -67,14 +67,14 @@ public class FloorTile extends Tile {
     // TODO please implement me!
     super.marshal(c);
     c.write("items", this.items);
-    c.write("trait", this.trait);
+  
   }
 
   @Override
   public void unmarshal(MarshallingContext c) {
     // TODO please implement me!
     c.read("items");
-    c.read("trait");
+ 
   }
 
   /**

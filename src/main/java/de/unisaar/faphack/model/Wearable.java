@@ -36,7 +36,7 @@ public class Wearable extends Item {
         super.marshal(c);
 //        c.write("o", this.onTile); do we need this or does it come from Item?
         c.write("weight", this.weight);
-        c.write("trait", this.trait);
+        //c.write("trait", this.trait);
 
         if (this.isWeapon) {
             c.write("isWeapon", 1);
@@ -49,7 +49,7 @@ public class Wearable extends Item {
     public void unmarshal(MarshallingContext c) {
         super.unmarshal(c);
         weight = c.readInt("weight");
-        trait = c.readString("trait");
+        //trait = c.readString("trait");
         isWeapon = (c.readInt("isWeapon")==1);
     }
 
