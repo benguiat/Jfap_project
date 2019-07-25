@@ -34,8 +34,11 @@ public class Wearable extends Item {
     @Override
     public void marshal(MarshallingContext c) {
         super.marshal(c);
+//        c.write("o", this.onTile); do we need this or does it come from Item?
         c.write("weight", this.weight);
         c.write("Character", this.character);
+        c.write("trait", this.trait);
+        
 
         if (this.isWeapon) {
             c.write("isWeapon", 1);
@@ -49,6 +52,7 @@ public class Wearable extends Item {
         super.unmarshal(c);
         weight = c.read("weight");
         character = c.read("Character");
+        trait = c.read("trait");
 
         int exists = 1;
         isWeapon = c.read("isWeapon").equals(exists);
