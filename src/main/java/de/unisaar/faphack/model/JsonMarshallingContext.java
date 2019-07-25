@@ -86,6 +86,8 @@ public class JsonMarshallingContext implements MarshallingContext {
                 String className = id.split("@")[0];
                 
                 s = factory.newInstance(className);
+                
+                System.out.println(id);
          
                 this.readcache.put(id, s);
                 
@@ -359,7 +361,7 @@ public class JsonMarshallingContext implements MarshallingContext {
 
     @Override
     public Tile[][] readBoard(String key) {
-        Tile[][] tileBoard = null;
+        Tile[][] tileBoard = new Tile[0][0];
 
         if (this.stack.size() > 0) {
 
@@ -367,28 +369,40 @@ public class JsonMarshallingContext implements MarshallingContext {
             Object object = obj.get(key);
 
             JSONArray arr = (JSONArray) object;
-
-            Collection<Tile[]> tiles = new ArrayList<>();
-
-            for (Object tile : arr) {
-
-                Collection<Tile> tileIndividual = new ArrayList<>();
-                JSONArray arr2 = (JSONArray) arr;
-                for (Object item : arr2) {
-                    JSONObject t = (JSONObject) item;
-                    Storable s = fromJson(t);
+            
+            List<Tile[]> tiles = new ArrayList<>();
+            
+            for(int i = 0; i < arr.size(); i++) {
+                
+            JSONArray tile = (JSONArray)arr.get(i);
+        
+            List<Tile> tileIndividual = new ArrayList<>();
+                
+                for(int j = 0; j < tile.size(); j++) {
+               
+                    JSONObject item = (JSONObject)tile.get(j);
+         
+                    Storable s = fromJson(item);
 
                     tileIndividual.add((Tile) s);
-                    Tile[] tileOne = tileIndividual.toArray(new Tile[0]);
+                    
+                    
+                    
+                    Tile[] tileOne = tileIndividual.toArray(new Tile[tileIndividual.size()]);
+                    
                     tiles.add(tileOne);
+                    
+             
 
                 }
-                tileBoard = tiles.toArray(new Tile[0][0]);
+
+                tileBoard = tiles.toArray(new Tile[arr.size()][tile.size()]);
+                
+                
 
             }
-
+            
             this.stack.push(obj);
-
         }
 
         return tileBoard;
