@@ -374,7 +374,7 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
         c.readAll("armor", arm);
         this.armor = arm;
         this.currentWeight = c.readInt("currentWeight");
-        this.health = c.readInt("healsth");
+        this.health = c.readInt("health");
         List<Wearable> it = new ArrayList<>();
         c.readAll("items",it);
         this.items = it;
