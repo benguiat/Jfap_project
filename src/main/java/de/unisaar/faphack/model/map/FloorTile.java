@@ -40,8 +40,7 @@ public class FloorTile extends Tile {
   public Tile willTake(Character c) {
       
     if (this.isOccupied() == true){
-        return null;
-        
+        return null;  
     }
     else{
       return this;  

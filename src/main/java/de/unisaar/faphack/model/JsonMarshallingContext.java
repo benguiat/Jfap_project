@@ -35,32 +35,38 @@ public class JsonMarshallingContext implements MarshallingContext {
  
   }
   
+  private String getIdClassName (Storable s){
+      
+      String idName = s.getClass().getSimpleName() + "@" + String.format("%06d", idGenerator);
+      idGenerator++;
+      
+      return idName;
+  }
+  
   private JSONObject toJson(Storable s){
       
       JSONObject obj = new JSONObject();
       
-      obj.put("id", s + "@" + idGenerator);
+      String idName = getIdClassName(s);
       
-      idGenerator += 1;
+      this.writecache.put(s, idName);
+      obj.put("id", idName);
+      
+      stack.push(obj);
+      //WRITE MARSHALL IN EACH CLASS
+      s.marshal(this);
+      stack.pop();
       
       return obj;
   } 
+  
 
 
   @Override
   public void save(Storable s) {
 
-      JSONObject obj = toJson(s);
-      
-      stack.push(obj);
    
-      s.marshal(this);
-      
-      System.out.println(readcache.get("game"));
-      
-      stack.pop();
-      
-      
+  System.out.println(toJson(s));
     
   }
 
@@ -74,8 +80,23 @@ public class JsonMarshallingContext implements MarshallingContext {
 
   @Override
   public void write(String key, Storable object) {
-    readcache.put(key, object);
-    writecache.put(object, key);
+    
+       if (stack.size() > 0){
+          JSONObject obj = stack.pop();
+          
+          JSONObject obj2 = new JSONObject();
+          
+          obj2 = toJson(object);
+          
+          obj2 = stack.pop();
+          
+          obj.put(key, obj2);
+          
+          stack.push(obj);
+      } 
+      
+      else {  
+      }
 
   }
 
@@ -87,6 +108,14 @@ public class JsonMarshallingContext implements MarshallingContext {
 
   @Override
   public void write(String key, int object) {
+       if (stack.size() > 0){
+          JSONObject obj = stack.pop();
+          obj.put(key, object);
+          stack.push(obj);
+      } 
+      
+      else {  
+      }
 
   }
 
@@ -98,7 +127,14 @@ public class JsonMarshallingContext implements MarshallingContext {
 
   @Override
   public void write(String key, double object) {
-    // TODO Auto-generated method stub
+      if (stack.size() > 0){
+          JSONObject obj = stack.pop();
+          obj.put(key, object);
+          stack.push(obj);
+      } 
+      
+      else {  
+      }
 
   }
 
@@ -110,7 +146,14 @@ public class JsonMarshallingContext implements MarshallingContext {
 
   @Override
   public void write(String key, String object) {
-    // TODO Auto-generated method stub
+     if (stack.size() > 0){
+          JSONObject obj = stack.pop();
+          obj.put(key, object);
+          stack.push(obj);
+      } 
+      
+      else {  
+      }
 
   }
 
@@ -122,7 +165,14 @@ public class JsonMarshallingContext implements MarshallingContext {
 
   @Override
   public void write(String key, Collection<? extends Storable> coll) {
-    // TODO Auto-generated method stub
+     if (stack.size() > 0){
+          JSONObject obj = stack.pop();
+          obj.put(key, coll);
+          stack.push(obj);
+      } 
+      
+      else {  
+      }
 
   }
 
@@ -134,7 +184,14 @@ public class JsonMarshallingContext implements MarshallingContext {
 
   @Override
   public void write(String key, Tile[][] coll) {
-    // TODO Auto-generated method stub
+     if (stack.size() > 0){
+          JSONObject obj = stack.pop();
+          obj.put(key, coll);
+          stack.push(obj);
+      } 
+      
+      else {  
+      }
 
   }
 
