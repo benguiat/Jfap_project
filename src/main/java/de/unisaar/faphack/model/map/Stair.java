@@ -9,26 +9,36 @@ import de.unisaar.faphack.model.MarshallingContext;
  *
  */
 public class Stair extends Connector<StairTile> {
-  /**
-   * If true, can only be used in direction from -> to
-   */
-  private boolean oneWay = false;
 
-  public Stair() {
+    /**
+     * If true, can only be used in direction from -> to
+     */
+    private boolean oneWay = false;
 
-  }
+    public Stair() {
 
-  public boolean onlyDown() {
-    return oneWay;
-  }
+    }
 
-  @Override
-  public void marshal(MarshallingContext c) {
-    // TODO please implement me!
-  }
+    public boolean onlyDown() {
+        return oneWay;
+    }
 
-  @Override
-  public void unmarshal(MarshallingContext c) {
-    // TODO please implement me!
-  }
+    @Override
+    public void marshal(MarshallingContext c) {
+        super.marshal(c);
+
+        if (this.oneWay) {
+            c.write("oneWay", 1);
+        } else {
+            c.write("oneWay", 0);
+        }
+    }
+
+    @Override
+    public void unmarshal(MarshallingContext c) {
+        super.unmarshal(c);
+
+        int intOneWay = 1;
+        oneWay = c.read("oneWay").equals(intOneWay);
+    }
 }
