@@ -1,3 +1,4 @@
+
 package de.unisaar.faphack.model;
 
 import de.unisaar.faphack.model.map.Tile;
@@ -52,6 +53,8 @@ public class Wearable extends Item {
 
     /**
      * Pick up wearable from tile. Adds wearable to character, and remove wearable from tile.
+     * 
+     * @param c Character to apply item to
      */
     public void pickUp(Character c) {
   
@@ -61,6 +64,8 @@ public class Wearable extends Item {
 
     /**
      * Drops wearable on tile. Add wearable to tile, and remove wearable for character.
+     * 
+     * @param t Tile to drop item on
      */
     public void drop(Tile t) {
         this.onTile = t;

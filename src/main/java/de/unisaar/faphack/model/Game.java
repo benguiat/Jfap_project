@@ -7,10 +7,6 @@ import de.unisaar.faphack.model.map.World;
 
 import java.util.List;
 
-/**
- * @author
- *
- */
 public class Game implements Storable {
   private World world;
   private Character protagonist;
@@ -20,7 +16,7 @@ public class Game implements Storable {
   }
 
   /**
-  * return the protagonist of this game
+  * @return Character: the protagonist of this game
   */
   public Character getProtagonist() {
     return protagonist;
