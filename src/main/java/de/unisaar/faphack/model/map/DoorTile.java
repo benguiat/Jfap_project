@@ -76,7 +76,7 @@ public class DoorTile extends WallTile implements Storable, Observable<DoorTile>
     public void unmarshal(MarshallingContext c) {
         super.unmarshal(c);
         this.hallway = c.read("hallway");
-        this.keyId = c.readInt("keyID");
+        this.keyId = c.readInt("keyId");
         
         this.locked = (c.readInt("locked") == 1);
         this.open = (c.readInt("open") == 1);
