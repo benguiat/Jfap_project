@@ -52,20 +52,20 @@ public class Room implements Storable {
         int x;
         int y;
 
-        if (Math.abs(d.x) >= (this.tiles.length - 2) || Math.abs(d.y) >= (this.tiles.length - 2)) {
+        if (Math.abs(d.x) >= (this.tiles.length - 2) || Math.abs(d.y) >= (this.tiles[0].length - 2)) {
             if (d.x > 0 && d.y > 0) {
                 x = t.getX() + (this.tiles.length - 2);
-                y = t.getY() + (this.tiles.length - 2);
+                y = t.getY() + (this.tiles[0].length - 2);
             } else if (d.x < 0 && d.y > 0) {
                 x = t.getX() - (this.tiles.length - 2);
-                y = t.getY() + (this.tiles.length - 2);
+                y = t.getY() + (this.tiles[0].length - 2);
             } else if (d.x < 0 && d.y < 0) {
                 x = t.getX() - (this.tiles.length - 2);
-                y = t.getY() - (this.tiles.length - 2);
+                y = t.getY() - (this.tiles[0].length - 2);
             } else if (d.x > 0 && d.y < 0) {
 
                 x = t.getX() + (this.tiles.length - 2);
-                y = t.getY() - (this.tiles.length - 2);
+                y = t.getY() - (this.tiles[0].length - 2);
             } else {
                 x = t.getX() + d.x;
                 y = t.getY() + d.y;
