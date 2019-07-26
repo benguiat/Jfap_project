@@ -30,15 +30,18 @@ public abstract class Tile implements Storable, TraitOwner {
     }
 
     public Tile(int x, int y, Room room) {
+        //initialize room, x, and y
         this.room = room;
         this.x = x;
         this.y = y;
     }
 
+    //get x
     public int getX() {
         return x;
     }
 
+    //get y
     public int getY() {
         return y;
     }
@@ -53,6 +56,7 @@ public abstract class Tile implements Storable, TraitOwner {
      * @return the next tile in direction d
      */
     public Tile getNextTile(Direction d) {
+        //get the next tile in the room with the distance d
 
         return room.getNextTile(this, d);
     }

@@ -23,6 +23,7 @@ public class FloorTile extends Tile {
   }
 
   public FloorTile(int x, int y, Room room){
+    //get x, y, and room variables from the tile class
     super(x, y, room);
     trait = FLOOR;
   }
@@ -38,9 +39,11 @@ public class FloorTile extends Tile {
    */
   @Override
   public Tile willTake(Character c) {
-    //check to see if the destination tile does not equal the current tile
+    //initialize variable for the current tile
     Tile currentTile = c.getTile();
+    //initialize variable for the destination tile
     Tile destinationTile = this;
+    //the tile is not occupied,
     if (this.isOccupied() == false){
       return this;
     }
