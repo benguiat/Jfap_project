@@ -26,8 +26,16 @@ public class JsonMarshallingContext implements MarshallingContext {
 
     private int idGenerator = 1;
 
+    /**
+     * Constructs a new <tt>JsonMarshallingContext</tt>.
+     *
+     * @param f is the JSON file in which the objects will be written.
+     * @param fact creates storable objects instances, which we will later
+     * populate with the data we read from the JSON file.
+     */
     public JsonMarshallingContext(File f, StorableFactory fact) {
         file = f;
+        // the stack will be used to temporarily store the key-value pairs that will be written to the JSON
         stack = new ArrayDeque<>();
         factory = fact;
         writecache = new IdentityHashMap<Storable, String>();
@@ -35,61 +43,89 @@ public class JsonMarshallingContext implements MarshallingContext {
 
     }
 
+    /**
+     * getIdClassName creates an ID for the storable object, so that it can be
+     * used as the key in the JSON file (value is the object).
+     *
+     * @return idName: the ID of the string will be the simple name of the
+     * underlying class + a random numerical ID
+     */
     private String getIdClassName(Storable s) {
-
         String idName = s.getClass().getSimpleName() + "@" + String.format("%06d", idGenerator);
         idGenerator++;
 
         return idName;
     }
 
+    /**
+     * toJson uses the marshaling methods in other classes to serialize a
+     * storable object to the JSON file as a stream of bytes which contain
+     * enough information to be able to re-build the object.
+     *
+     * @param s is the storable object
+     * @return obj is the JSON object
+     */
     private JSONObject toJson(Storable s) {
 
+        // A JSONObject is an unordered collection of name/value pairs. 
         JSONObject obj = new JSONObject();
 
         if (s == null) {
+            // empty storable should not be saved
             return null;
         } else if (this.writecache.get(s) != null) {
-
+            // the object already is loaded, so we jsu return it to save to file
             obj.put("id", this.writecache.get(s));
             return obj;
 
         } else {
 
             String idName = getIdClassName(s);
-
+            // put() creates the key-value pair
             this.writecache.put(s, idName);
+            // put in in an object
             obj.put("id", idName);
-
+            // push() will populate the stack with the key-value pair (obj) 
+            // so that it's retrievable with the right functions
             this.stack.push(obj);
+            // the marshaling method 
             s.marshal(this);
+            // now we need to return the object to save to file
             obj = this.stack.pop();
 
             return obj;
         }
     }
 
+    /**
+     * fromJson uses the unmarshaling methods in other classes to deserialize
+     * the JSON encoded contents to Java objects content tree.
+     *
+     * @return s is the storable object.
+     */
     private Storable fromJson(JSONObject object) {
-
+        // Create a new instance of s.
         Storable s = null;
 
         if (object != null) {
-
+            // The ID of the object is the key value in the JSON.
             String id = (String) object.get("id");
 
             if (this.readcache.get(id) != null) {
+                // if the object is already loaded
                 s = this.readcache.get(id);
 
             } else {
                 stack.push(object);
+                // the simple name of the class is the first part of the ID
                 String className = id.split("@")[0];
-
+                // create a new instance of the object with the name we fetched
                 s = factory.newInstance(className);
-
+                // load the ID and the (for now, empty) object
                 this.readcache.put(id, s);
-
+                // convert the encoded JSON information to the content tree
                 s.unmarshal(this);
-
+                // now we're done! return the object.
                 stack.pop();
 
                 return s;
@@ -101,6 +137,10 @@ public class JsonMarshallingContext implements MarshallingContext {
 
     }
 
+    /** save() will call to
+     *
+     * @param s is the storable Java object.
+     */
     @Override
     public void save(Storable s) {
 
@@ -343,7 +383,6 @@ public class JsonMarshallingContext implements MarshallingContext {
             }
         }
     }
-    
 
     @Override
     public Tile[][] readBoard(String key) {
@@ -356,19 +395,19 @@ public class JsonMarshallingContext implements MarshallingContext {
             JSONArray arr = (JSONArray) object;
 
             List<Tile[]> tiles = new ArrayList<>();
-            
-            for (Object item: arr) {
+
+            for (Object item : arr) {
                 List<Tile> tileRow = new ArrayList<>();
-                JSONArray itemArray = (JSONArray) item; 
-                
+                JSONArray itemArray = (JSONArray) item;
+
                 for (Object i : itemArray) {
                     Storable s = fromJson((JSONObject) i);
-                    tileRow.add((Tile)s);
+                    tileRow.add((Tile) s);
                 }
-                
+
                 tiles.add((Tile[]) tileRow.toArray(new Tile[0]));
             }
-             
+
             tileBoard = (Tile[][]) tiles.toArray(new Tile[0][0]);
             stack.push(obj);
         }
