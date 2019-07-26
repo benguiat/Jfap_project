@@ -1,7 +1,8 @@
+//Commented!
+
 package de.unisaar.faphack.model;
 
 public class CharacterModifier implements Storable {
-    // what this modifier does to the various aspects of a character
 
     public int health;
     public int magic;
@@ -21,13 +22,15 @@ public class CharacterModifier implements Storable {
 
     /**
      * Apply the changes of this modifier to c, but only if howLong is not zero
+     * 
+     * @param c
+     * @return true if howLong is greater than 0, false otherwise
      */
     public boolean applyTo(Character c) {
-
         if (howLong > 0) {
-            c.health += health;
-            c.magic += magic;
-            c.power += power;
+            c.health = health;
+            c.magic = magic;
+            c.power = power;
             return true;
         } else {
             return false;
@@ -41,7 +44,6 @@ public class CharacterModifier implements Storable {
 
     @Override
     public void marshal(MarshallingContext c) {
-//    super.marshal(c);
         c.write("health", this.health);
         c.write("magic", this.magic);
         c.write("power", this.power);
@@ -51,11 +53,10 @@ public class CharacterModifier implements Storable {
 
     @Override
     public void unmarshal(MarshallingContext c) {
-
-        health = c.readInt("health");
-        magic = c.readInt("magic");
-        power = c.readInt("power");
-        howLong = c.readInt("howLong");
+        this.health = c.readInt("health");
+        this.magic = c.readInt("magic");
+        this.power = c.readInt("power");
+        this.howLong = c.readInt("howLong");
 
     }
 }

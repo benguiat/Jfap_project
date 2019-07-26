@@ -5,9 +5,6 @@ import de.unisaar.faphack.model.map.Tile;
 /**
  * Wearables are Items that can be carried by a Character. These include armor,
  * weapons, food, potions, key and others.
- *
- * @author
- *
  */
 public class Wearable extends Item {
 
@@ -17,7 +14,7 @@ public class Wearable extends Item {
     protected int weight;
 
     /**
-     *
+     * Whether item is a weapon.
      */
     protected boolean isWeapon;
 
@@ -38,7 +35,6 @@ public class Wearable extends Item {
         c.write("character", this.character);
         c.write("weight", this.weight);
 
-
         if (this.isWeapon) {
             c.write("isWeapon", 1);
         } else {
@@ -52,18 +48,21 @@ public class Wearable extends Item {
         this.weight = c.readInt("weight");
         this.character = c.read("character");
         this.isWeapon = (c.readInt("isWeapon")==1);
-//        this.onTile = c.read("onTile");
-//        this.trait = c.readString("trait");
     }
 
+    /**
+     * Pick up wearable from tile. Adds wearable to character, and remove wearable from tile.
+     */
     public void pickUp(Character c) {
   
         this.character = c;
         this.onTile = null;
     }
 
+    /**
+     * Drops wearable on tile. Add wearable to tile, and remove wearable for character.
+     */
     public void drop(Tile t) {
-        // TODO please implement me!
         this.onTile = t;
         this.character = null;
     }
