@@ -89,6 +89,7 @@ public abstract class Tile implements Storable, TraitOwner {
     }
 
     public void marshal(MarshallingContext c) {
+        //write variables to marshal
         c.write("room", this.room);
         c.write("trait", this.trait);
         c.write("x", this.x);
@@ -97,6 +98,7 @@ public abstract class Tile implements Storable, TraitOwner {
     }
 
     public void unmarshal(MarshallingContext c) {
+        //write variables to unmarshal
         room = c.read("room");
         trait = c.readString("trait");
         x = c.readInt("x");

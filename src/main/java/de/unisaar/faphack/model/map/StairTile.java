@@ -32,20 +32,31 @@ public class StairTile extends Tile {
      */
     @Override
     public Tile willTake(Character c) {
-
+        //initialize stair variable
         Stair stair = this.getStair();
+        //initialize variable to only descend the stairs
         boolean oneWay = stair.onlyDown();
+        //initialize variable to go to another tile in the stairs
         Tile toTile = stair.to();
+        //initialize variable to go from another tile in the stairs
         Tile fromTile = stair.from();
 
+        //if the character is only descending the stairs and going to another tile
         if (oneWay == true && this == toTile) {
+            //the character can't
             return null;
         } else {
+            //if the character is going to another tile
             if (this == toTile) {
+                //character levels down
                 c.levelDown();
+                //character goes from another tile in the stairs
                 return fromTile;
+
             } else {
+                //character levels up
                 c.levelUp();
+                //character goes to another tile in the stairs
                 return toTile;
             }
         }
@@ -61,7 +72,9 @@ public class StairTile extends Tile {
 
     @Override
     public void marshal(MarshallingContext c) {
+        //call the marshal method from JsonMarshallingContext
         super.marshal(c);
+        //write stair and trap variables
         c.write("stair", this.stair);
         c.write("trap", this.trap);
 
@@ -69,7 +82,9 @@ public class StairTile extends Tile {
 
     @Override
     public void unmarshal(MarshallingContext c) {
+        //call the unmarshal method from JsonMarshallingContext
         super.unmarshal(c);
+        //read stair and trap variables
         stair = c.read("stair");
         trap = c.read("trap");
 

@@ -43,13 +43,16 @@ public class FloorTile extends Tile {
     Tile currentTile = c.getTile();
     //initialize variable for the destination tile
     Tile destinationTile = this;
-    //the tile is not occupied,
+    //the tile is not occupied, then the character can enter the tile
     if (this.isOccupied() == false){
       return this;
     }
+    //if the character is already on the tile
     if (currentTile == destinationTile){
         return this;
     }
+    //tile is already occupied by another character
+    //the character cannot occupy the tile
     else{
       return null;
     }
@@ -61,27 +64,34 @@ public class FloorTile extends Tile {
   }
 
   @Override
+  //method to remove wearables
   public boolean removeItem(Wearable what) {
     return items.remove(what);
   }
 
   @Override
+  //method to add wearables
   public boolean addItem(Wearable what) {
     return items.add(what);
   }
 
   @Override
   public void marshal(MarshallingContext c) {
+    //call marshal class from JsonMarshallingContext
     super.marshal(c);
+    //write items variable
     c.write("items", this.items);
 
   }
 
   @Override
   public void unmarshal(MarshallingContext c) {
+    //call unmarshal class from JsonMarshallingContext
     super.unmarshal(c);
-    
+
+    //create an array for the items to unmarshal
     List<Item> it = new ArrayList<>();
+    //read the items
     c.readAll("items",it);
     this.items = it;
     
@@ -94,13 +104,15 @@ public class FloorTile extends Tile {
    */
   @Override
   public boolean isOccupied(){
+    //initialize list for all of the characters in the room
     List<Character> inhabitants = this.room.getInhabitants();
+    //if the tile is occupied by a character
     for (Character character : inhabitants) {
         Tile tile = character.getTile();
         if (this.equals(tile)){
             return true;
         }
-    }
+    }//if the tile is not occupied by a character
     return false;
   }
 
