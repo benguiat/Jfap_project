@@ -343,6 +343,7 @@ public class JsonMarshallingContext implements MarshallingContext {
             }
         }
     }
+    
 
     @Override
     public Tile[][] readBoard(String key) {
@@ -352,34 +353,24 @@ public class JsonMarshallingContext implements MarshallingContext {
 
             JSONObject obj = this.stack.pop();
             Object object = obj.get(key);
-
             JSONArray arr = (JSONArray) object;
 
             List<Tile[]> tiles = new ArrayList<>();
-
-            for (int i = 0; i < arr.size(); i++) {
-
-                JSONArray tile = (JSONArray) arr.get(i);
-
-                List<Tile> tileIndividual = new ArrayList<>();
-
-                for (int j = 0; j < tile.size(); j++) {
-
-                    JSONObject item = (JSONObject) tile.get(j);
-
-                    Storable s = fromJson(item);
-
-                    tileIndividual.add((Tile) s);
-
-                    Tile[] tileOne = tileIndividual.toArray(new Tile[tileIndividual.size()]);
-
-                    tiles.add(tileOne);
-
+            
+            for (Object item: arr) {
+                List<Tile> tileRow = new ArrayList<>();
+                JSONArray itemArray = (JSONArray) item; 
+                
+                for (Object i : itemArray) {
+                    Storable s = fromJson((JSONObject) i);
+                    tileRow.add((Tile)s);
                 }
-                tileBoard = tiles.toArray(new Tile[arr.size()][tile.size()]);
+                
+                tiles.add((Tile[]) tileRow.toArray(new Tile[0]));
             }
-
-            this.stack.push(obj);
+             
+            tileBoard = (Tile[][]) tiles.toArray(new Tile[0][0]);
+            stack.push(obj);
         }
 
         return tileBoard;
