@@ -96,12 +96,18 @@ public class DoorTile extends WallTile implements Storable, Observable<DoorTile>
     public void register(Observer<DoorTile> observer) {
         // lazy initialization
         // TODO please implement me!
-
+        if (observers == null) {
+      observers = new ArrayList<>();
     }
+    observers.add(observer);
+  }
+
+
 
     @Override
     public void notifyObservers(DoorTile object) {
-        
+        if (observers != null)
+      for(Observer<DoorTile> o: observers) { o.update(object); }
         // TODO please implement me!
     }
 
