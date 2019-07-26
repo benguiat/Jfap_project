@@ -1,3 +1,5 @@
+//Commented!
+
 package de.unisaar.faphack.model;
 
 import de.unisaar.faphack.model.effects.ModifyingEffect;
@@ -5,8 +7,6 @@ import de.unisaar.faphack.model.effects.ModifyingEffect;
 public class Armor extends Wearable {
 
   private ModifyingEffect modifyingEffect;
-
-
 
   public Armor(){
 

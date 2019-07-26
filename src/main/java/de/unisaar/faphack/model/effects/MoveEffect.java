@@ -1,3 +1,5 @@
+//Commented!
+
 package de.unisaar.faphack.model.effects;
 
 import de.unisaar.faphack.model.Direction;
@@ -9,6 +11,13 @@ public class MoveEffect implements Effect<Character, Boolean> {
 
     private Direction dir;
 
+     /**
+     * move character into the given direction only if no more than one tile. 
+     * Prevent character from moving more than one tile in any direction.
+     *
+     * @param d direction to move
+     * @return error if assertion fails
+     */
     public MoveEffect(Direction d) {
         dir = d;
         if (java.lang.Math.abs(dir.x) > 1 || java.lang.Math.abs(dir.y) > 1) {

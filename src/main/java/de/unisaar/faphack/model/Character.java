@@ -1,3 +1,5 @@
+//Commented!
+
 package de.unisaar.faphack.model;
 
 import de.unisaar.faphack.model.effects.ModifyingEffect;
@@ -11,10 +13,6 @@ import de.unisaar.faphack.model.map.Room;
 import de.unisaar.faphack.model.map.Tile;
 import java.util.Iterator;
 
-/**
- * @author
- *
- */
 public class Character extends AbstractObservable<TraitedTileOccupier>
         implements Storable, TraitedTileOccupier {
 
@@ -104,18 +102,18 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
      * @param destination
      * @return void
      */
-      public void move(Tile destination) {
-    if (tile != null) {
-      Room current = tile.getRoom();
-      if (destination.getRoom() != current) {
-        current.getInhabitants().remove(this);
-        destination.getRoom().getInhabitants().add(this);
-      }
-    } else {
-      destination.getRoom().getInhabitants().add(this);
+    public void move(Tile destination) {
+        if (tile != null) {
+            Room current = tile.getRoom();
+            if (destination.getRoom() != current) {
+                current.getInhabitants().remove(this);
+                destination.getRoom().getInhabitants().add(this);
+            }
+        } else {
+            destination.getRoom().getInhabitants().add(this);
+        }
+        tile = destination;
     }
-    tile = destination;
-  }
 
     /**
      * Pick up the given Wearable. Returns true if the action is possible. The
@@ -145,9 +143,7 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
 
             return true;
         } else {
-
             return false;
-
         }
 
     }
@@ -163,6 +159,8 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
         return activeWeapon;
     }
 
+
+    //Getters
     public Tile getTile() {
         return tile;
     }
@@ -200,6 +198,7 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
     }
 
     public int getWeight() {
+        //Gets current total weight of all wearable items.
         int sum = 0;
         for (Wearable i : items) {
             sum += i.weight;
@@ -233,7 +232,6 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
         // turns is for how many turns will the effects occur
         int turns = eff.howLong();
 
-//        while (turns > 0) {
         // implement effects: health, magic, power
         if (affected.armor.isEmpty()) {
             affected.health += eff.health;
@@ -241,41 +239,27 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
             affected.power += eff.power;
         } else {
             // for every armor in affected.armor we gotta check damage
-
             CharacterModifier newEff = eff;
 
             for (Armor arm : armor) {
                 ModifyingEffect armCm = arm.getModifyingEffect();
                 newEff = armCm.apply(newEff);
-
             }
-
             affected.health += newEff.health;
             affected.magic += newEff.magic;
             affected.power += newEff.power;
-
         }
-
-//            turns -= 1;
-//        }
     }
 
     /**
      * Apply the effects of, e.g., a poisoning, eating something, etc.
      */
     public void applyItem(CharacterModifier eff) {
-
-        // turns is for how many turns will the effects occur
-//        int turns = eff.howLong();
-//        while (turns > 0) {
         // implement effects: health, magic, power
         Character affected = this;
         affected.health += eff.health;
         affected.magic += eff.magic;
         affected.power += eff.power;
-
-//            turns -= 1;
-//        }
     }
 
     /**
@@ -301,13 +285,11 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
             }
             // in any case, you have to remove it from the items list
             this.items.remove(item);
-
             return true;
         } else {
             // this means that there's no such item in items list
             return false;
         }
-
     }
 
     /**
@@ -319,24 +301,21 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
      */
     public boolean equipItem(Wearable wearable) {
 
-        // First thing first, the wearable has to be in the inventory
+        // The wearable has to be in the inventory
         if (this.items.contains(wearable)) {
             if (wearable.isWeapon) {
-                // if the wearable is a weapon, Annie get your gun
+                // If the wearable is a weapon, Annie get your gun
                 this.activeWeapon = wearable;
             } else if (wearable instanceof Armor) {
-                // if the wearable is an armor, put it in the armor list
+                // If the wearable is an armor, put it in the armor list
                 this.armor.add((Armor) wearable);
             }
             return true;
         } else {
-            // then you tried to put on sth you don't own you dirty thief
+            // Then you tried to put on something you don't own you dirty thief
             return false;
         }
     }
-
-
-
 
     @Override
     public String getTrait() {
@@ -345,12 +324,11 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
 
     @Override
     public void marshal(MarshallingContext c) {
-        // TODO please implement me!
         c.write("name", this.name);
         c.write("role", this.role);
         c.write("activeEffects", this.activeEffects);
         c.write("activeWeapon", this.activeWeapon);
-        c.write("armor",this.armor);
+        c.write("armor", this.armor);
         c.write("currentWeight", this.currentWeight);
         c.write("health", this.health);
         c.write("items", this.items);
@@ -376,7 +354,7 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
         this.currentWeight = c.readInt("currentWeight");
         this.health = c.readInt("health");
         List<Wearable> it = new ArrayList<>();
-        c.readAll("items",it);
+        c.readAll("items", it);
         this.items = it;
         this.level = c.readInt("level");
         this.magic = c.readInt("magic");
@@ -386,6 +364,7 @@ public class Character extends AbstractObservable<TraitedTileOccupier>
         this.skills = c.read("skills");
     }
 
+    // Increase power by 5 when resting.
     public void rest() {
         this.power += 5;
     }
