@@ -51,29 +51,38 @@ public class Room implements Storable {
 
         int x;
         int y;
-
-        if (Math.abs(d.x) >= (this.tiles.length - 2) || Math.abs(d.y) >= (this.tiles[0].length - 2)) {
-            if (d.x > 0 && d.y > 0) {
-                x = t.getX() + (this.tiles.length - 2);
-                y = t.getY() + (this.tiles[0].length - 2);
-            } else if (d.x < 0 && d.y > 0) {
-                x = t.getX() - (this.tiles.length - 2);
-                y = t.getY() + (this.tiles[0].length - 2);
-            } else if (d.x < 0 && d.y < 0) {
-                x = t.getX() - (this.tiles.length - 2);
-                y = t.getY() - (this.tiles[0].length - 2);
-            } else if (d.x > 0 && d.y < 0) {
-
-                x = t.getX() + (this.tiles.length - 2);
-                y = t.getY() - (this.tiles[0].length - 2);
-            } else {
-                x = t.getX() + d.x;
-                y = t.getY() + d.y;
-            }
-        } else {
-            x = t.getX() + d.x;
-            y = t.getY() + d.y;
+        // check how far we can go in each direction
+        int xpos = this.tiles.length - (t.x + 1);
+        int xneg = this.tiles.length - (xpos + 1);
+        int ypos = this.tiles[0].length - (t.y + 1);
+        int yneg = this.tiles[0].length - (ypos + 1);
+        System.out.print(xpos+ " " +xneg);
+        // CHECKING FOR HITTING WALLS 
+        // check if we will hit right wall, we want returned x to be the x of the wall we hit
+        if (d.x > xpos) {
+            x = t.x + xpos;
+        }      
+        // check if we will hit left wall, we want returned x to be the x of the wall we hit
+        else if (d.x < -xneg) {
+            x = t.x - xneg;
         }
+        // if we dont hit right or left wall, we move according to direction
+        else {
+            x = t.x + d.x;
+        }
+        // check if we hit upper wall
+        if (d.y > ypos) {
+            y = t.y + ypos;
+        }
+        // check if we hit bottom wall
+        else if (d.y < -yneg) {
+            y = t.y - yneg;
+        }
+        // if we dont hit pos or neg walls
+        else {
+            y = t.y + d.y;
+        }
+        System.out.println(x+ " "+y);
         return tiles[x][y];
     }
 
@@ -104,8 +113,6 @@ public class Room implements Storable {
     }
 
     public Tile[][] getTiles() {
-        System.out.println(tiles[0]);
-        System.out.println(tiles[1]);
         return tiles;
     }
 
