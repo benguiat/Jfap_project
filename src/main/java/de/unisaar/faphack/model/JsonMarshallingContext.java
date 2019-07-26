@@ -74,7 +74,7 @@ public class JsonMarshallingContext implements MarshallingContext {
             // empty storable should not be saved
             return null;
         } else if (this.writecache.get(s) != null) {
-            // the object already is loaded, so we jsu return it to save to file
+            // the object is loaded, so we just return it to save to file
             obj.put("id", this.writecache.get(s));
             return obj;
 
@@ -137,7 +137,9 @@ public class JsonMarshallingContext implements MarshallingContext {
 
     }
 
-    /** save() will call to
+    /**
+     * save() uses write() to serialize the Java object, then it writes it to a
+     * file with toJSONString()
      *
      * @param s is the storable Java object.
      */
@@ -151,11 +153,17 @@ public class JsonMarshallingContext implements MarshallingContext {
             writer.flush();
             writer.close();
         } catch (IOException ex) {
+            // FileNotFoundException
             Logger.getLogger(JsonMarshallingContext.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
+    /**
+     * read() uses fromJson() to read a JSON file to Java objects.
+     *
+     * @return s is the storable Java object
+     */
     @Override
     public Storable read() {
 
@@ -177,13 +185,19 @@ public class JsonMarshallingContext implements MarshallingContext {
 
     }
 
+    /**
+     * write() serializes objects to JSON format and is used by save().
+     *
+     * @param key is the key for the JSON
+     * @param object is the Java object
+     */
     @Override
     public void write(String key, Storable object) {
 
         if (this.stack.size() > 0) {
-
+            // clear the stack from first object
             JSONObject obj = this.stack.pop();
-
+            // convert the following object to JSON
             JSONObject obj2 = toJson(object);
             obj.put(key, obj2);
             this.stack.push(obj);
@@ -191,6 +205,14 @@ public class JsonMarshallingContext implements MarshallingContext {
         }
     }
 
+    /**
+     * This read() method is used when the JSON value is a String. //TODO Sure?
+     * There's a readString below
+     *
+     * @param <T> // TODO what is this????
+     * @param key is the JSON key
+     * @return
+     */
     @Override
     public <T extends Storable> T read(String key) {
 
@@ -214,6 +236,12 @@ public class JsonMarshallingContext implements MarshallingContext {
 
     }
 
+    /**
+     * This write() method is used when the Java Object is a String.
+     *
+     * @param key is the JSON key
+     * @param object is the String
+     */
     @Override
     public void write(String key, int object) {
 
@@ -227,6 +255,12 @@ public class JsonMarshallingContext implements MarshallingContext {
 
     }
 
+    /**
+     * This read() method is used when the JSON value is an integer.
+     *
+     * @param key is the JSON key
+     * @return the Java object
+     */
     @Override
     public int readInt(String key) {
 
@@ -244,6 +278,12 @@ public class JsonMarshallingContext implements MarshallingContext {
         return output;
     }
 
+    /**
+     * This write() method is used to write a float number(double) to the JSON.
+     *
+     * @param key is the JSON key
+     * @param object is the Java Object
+     */
     @Override
     public void write(String key, double object) {
 
@@ -255,6 +295,12 @@ public class JsonMarshallingContext implements MarshallingContext {
 
     }
 
+    /**
+     * This read() method is used when the JSON value is a float number(double).
+     *
+     * @param key is the JSON key
+     * @return
+     */
     @Override
     public double readDouble(String key) {
         double output = 0;
@@ -271,6 +317,12 @@ public class JsonMarshallingContext implements MarshallingContext {
         return output;
     }
 
+    /**
+     * This write() method is used if the Java Object is a String.
+     *
+     * @param key is the JSON key
+     * @param object is a string.
+     */
     @Override
     public void write(String key, String object) {
 
@@ -282,6 +334,12 @@ public class JsonMarshallingContext implements MarshallingContext {
 
     }
 
+    /**
+     * This read() method is used when the JSON object is a string.
+     *
+     * @param key is the JSON key
+     * @return a string
+     */
     @Override
     public String readString(String key) {
         String output = null;
@@ -298,6 +356,12 @@ public class JsonMarshallingContext implements MarshallingContext {
         return output;
     }
 
+    /**
+     * Write a Collection (Array) to a String to serialize into the JSON.
+     *
+     * @param key is the JSON key
+     * @param coll is the ArrayList
+     */
     @Override
     public void write(String key, Collection<? extends Storable> coll) {
 
@@ -307,22 +371,31 @@ public class JsonMarshallingContext implements MarshallingContext {
 
             if (this.stack.size() > 0) {
                 JSONObject obj = this.stack.pop();
-
+                // create a JSON Array to store the Array Object
                 JSONArray arr = new JSONArray();
-
+                // add every element of the Array to the JSON array
                 for (Storable item : coll) {
-
+                    // a. convert 
                     JSONObject obj2 = toJson(item);
+                    // b. add to JSON Array
                     arr.add(obj2);
 
                 }
-
+                // push JSON array to stack, you know the rest
                 obj.put(key, arr);
                 this.stack.push(obj);
             }
         }
     }
 
+    /**
+     * This function is used in readAll() to convert an item of a JSON Array to
+     * a Java Object. You'll see why.
+     *
+     * @param <T>
+     * @param item is the item in JSON array
+     * @return
+     */
     private <T extends Storable> T item2Storable(Object item) {
         JSONObject obj = (JSONObject) item;
         JSONObject newObject = new JSONObject();
@@ -336,16 +409,24 @@ public class JsonMarshallingContext implements MarshallingContext {
         return storable;
     }
 
+    /**
+     * This read() method will read a JSON Array to a Java Array, converting
+     * every item in the array to a Java Object (or whatever it needs to be).
+     *
+     * @param key is the JSON key
+     * @param coll is the Java Array
+     */
     @Override
     public void readAll(String key, Collection<? extends Storable> coll) {
 
         if (this.stack.size() > 0) {
 
             JSONObject obj = this.stack.pop();
-
+            
             Object object = obj.get(key);
             Collection<JSONObject> objectCollection = (Collection<JSONObject>) object;
 
+            // for every item in the array, use item2Storable to make it an Object
             for (Object item : objectCollection) {
 
                 coll.add(item2Storable(item));
@@ -357,6 +438,13 @@ public class JsonMarshallingContext implements MarshallingContext {
 
     }
 
+    /**
+     * This write() method is responsible for writing the Tiles in the JSON
+     * file. The tiles are a vector.
+     *
+     * @param key is the JSON key.
+     * @param coll is the Tile collection.
+     */
     @Override
     public void write(String key, Tile[][] coll) {
 
@@ -368,9 +456,11 @@ public class JsonMarshallingContext implements MarshallingContext {
                 JSONObject obj = this.stack.pop();
 
                 JSONArray arr = new JSONArray();
-
+                
+                // For every tile in the collection...
                 for (Tile[] tile : coll) {
                     JSONArray arr2 = new JSONArray();
+                    // ...add the tile to the JSON Array
                     for (Tile t : tile) {
                         JSONObject obj2 = toJson(t);
                         arr2.add(obj2);
@@ -384,6 +474,12 @@ public class JsonMarshallingContext implements MarshallingContext {
         }
     }
 
+    /**
+     * The read() method to read the entire board, which is composed of Tiles.
+     *
+     * @param key is JSON key
+     * @return the Board, hopefully
+     */
     @Override
     public Tile[][] readBoard(String key) {
         Tile[][] tileBoard = new Tile[0][0];
@@ -393,21 +489,26 @@ public class JsonMarshallingContext implements MarshallingContext {
             JSONObject obj = this.stack.pop();
             Object object = obj.get(key);
             JSONArray arr = (JSONArray) object;
-
+            
+            // Make an empty lsit of tiles
             List<Tile[]> tiles = new ArrayList<>();
 
+            // Make an empty list for a row.
             for (Object item : arr) {
                 List<Tile> tileRow = new ArrayList<>();
                 JSONArray itemArray = (JSONArray) item;
-
+                
+                // Add the tile to the row.
                 for (Object i : itemArray) {
                     Storable s = fromJson((JSONObject) i);
                     tileRow.add((Tile) s);
                 }
-
+                
+                // Add the row to the Board
                 tiles.add((Tile[]) tileRow.toArray(new Tile[0]));
             }
-
+            
+            // Stack the board, stack it good
             tileBoard = (Tile[][]) tiles.toArray(new Tile[0][0]);
             stack.push(obj);
         }
