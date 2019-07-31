@@ -397,10 +397,9 @@ public class JsonMarshallingContext implements MarshallingContext {
      * @return
      */
     private <T extends Storable> T item2Storable(Object item) {
-        JSONObject obj = (JSONObject) item;
-        JSONObject newObject = new JSONObject();
-        newObject.put("item", obj);
-        stack.push(newObject);
+        JSONObject obj = new JSONObject();
+        obj.put("item", item);
+        stack.push(obj);
 
         T storable = (T) read("item");
 
